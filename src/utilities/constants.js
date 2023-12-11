@@ -1,0 +1,3 @@
+const EVENT_LIST_ITEMS_VOLUME = 3;
+
+export { EVENT_LIST_ITEMS_VOLUME }
