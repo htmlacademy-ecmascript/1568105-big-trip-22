@@ -157,7 +157,7 @@ const pointFormEditTemplate = () =>
     </form>
   </li>`;
 
-class PointFormEditView {
+export default class PointFormEditView {
   getTemplate() {
     return pointFormEditTemplate();
   }
@@ -169,4 +169,3 @@ class PointFormEditView {
     return this.element;
   }
 }
-export default PointFormEditView;

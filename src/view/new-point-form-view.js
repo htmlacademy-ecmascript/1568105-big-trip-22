@@ -164,7 +164,7 @@ const newPointFormTemplate = () =>
     </form>
   </li>`;
 
-class NewPointFormView {
+export default class NewPointFormView {
   getTemplate() {
     return newPointFormTemplate();
   }
@@ -176,5 +176,3 @@ class NewPointFormView {
     return this.element;
   }
 }
-
-export default NewPointFormView;

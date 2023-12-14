@@ -39,7 +39,7 @@ const pointItemTemplate = () =>
     </div>
   </li>`;
 
-class PointItemView {
+export default class PointItemView {
   getTemplate() {
     return pointItemTemplate();
   }
@@ -51,4 +51,3 @@ class PointItemView {
     return this.element;
   }
 }
-export default PointItemView;

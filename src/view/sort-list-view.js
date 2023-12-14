@@ -28,7 +28,7 @@ const sortListTemplate = () =>
     </div>
   </form>`;
 
-class SortListView {
+export default class SortListView {
   getTemplate() {
     return sortListTemplate();
   }
@@ -40,4 +40,3 @@ class SortListView {
     return this.element;
   }
 }
-export default SortListView;

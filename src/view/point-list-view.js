@@ -2,7 +2,7 @@ import { createElement } from '../render.js';
 
 const pointListTemplate = () => `<ul class="trip-events__list"></ul>`;
 
-class PointListView {
+export default class PointListView {
   getTemplate() {
     return pointListTemplate();
   }
@@ -14,4 +14,3 @@ class PointListView {
     return this.element;
   }
 }
-export default PointListView;

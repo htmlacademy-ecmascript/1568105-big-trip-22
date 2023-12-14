@@ -25,7 +25,7 @@ const filterListTemplate = () =>
     <button class="visually-hidden" type="submit">Accept filter</button>
   </form>`;
 
-class FilterListView {
+export default class FilterListView {
   getTemplate() {
     return filterListTemplate();
   }
@@ -37,4 +37,3 @@ class FilterListView {
     return this.element;
   }
 }
-export default FilterListView;
