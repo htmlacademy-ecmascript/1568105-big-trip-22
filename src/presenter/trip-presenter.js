@@ -1,5 +1,5 @@
 import { render } from '../render.js';
-import { TRIP_LIST_ITEMS_VOLUME } from '../utilities/constants.js';
+import { TRIP_ITEMS_VOLUME } from '../utilities/constants.js';
 import SortListView from '../view/sort-list-view.js';
 import NewPointFormView from '../view/new-point-form-view.js';
 import PointFormEditView from '../view/point-form-edit-view.js';
@@ -18,7 +18,7 @@ export default class TripPresenter {
     render(this.pointListComponent, this.tripContainer);
     render(new PointFormEditView(), this.pointListComponent.getElement());
 
-    for (let i = 0; i < TRIP_LIST_ITEMS_VOLUME; i++) {
+    for (let i = 0; i < TRIP_ITEMS_VOLUME; i++) {
       render(new PointItemView(), this.pointListComponent.getElement());
     }
 
