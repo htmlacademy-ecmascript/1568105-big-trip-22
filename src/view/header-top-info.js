@@ -13,7 +13,7 @@ const headerInfoTemplate = () =>
     </p>
   </section>`;
 
-export default class HeaderInfoView {
+export default class HeaderTopInfo {
   getTemplate() {
     return headerInfoTemplate();
   }
@@ -23,5 +23,9 @@ export default class HeaderInfoView {
       this.element = createElement(this.getTemplate());
     }
     return this.element;
+  }
+
+  removeElement() {
+    this.element = null;
   }
 }
