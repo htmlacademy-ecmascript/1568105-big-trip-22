@@ -6,24 +6,21 @@ import PointListItem from '../view/point-list-item.js';
 import EditPoint from '../view/edit-point.js';
 // import NewPointForm from '../view/new-point-form.js';
 
-const mainContainer = document.querySelector('.trip-events');
-
 export default class MainPresenter {
   mainSortListComponent = new MainSortList();
   pointListComponent = new PointList();
   listItemComponent = new PointListItem();
-  pointEditorComponent = new EditPoint();
+  editPointComponent = new EditPoint();
   // newPointFormComponent = new NewPointForm();
 
-  // constructor(mainContainer) {
-  //   this.mainContainer = mainContainer;
-  // }
+  constructor({mainContainer}) {
+    this.mainContainer = mainContainer;
+  }
 
   init() {
-    render(this.mainSortListComponent, mainContainer);
-    render(this.pointListComponent, mainContainer);
-
-    render(new EditPoint(), this.pointListComponent.getElement());
+    render(this.mainSortListComponent, this.mainContainer);
+    render(this.pointListComponent, this.mainContainer);
+    render(this.editPointComponent, this.pointListComponent.getElement());
 
     for (let i = 0; i < POINTS_VOLUME; i++) {
       render(new PointListItem(), this.pointListComponent.getElement());
