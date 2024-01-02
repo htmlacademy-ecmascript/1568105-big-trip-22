@@ -7,14 +7,13 @@ import EditPoint from '../view/edit-point.js';
 // import NewPointForm from '../view/new-point-form.js';
 
 export default class MainPresenter {
-  mainSortListComponent = new MainSortList();
-  pointListComponent = new PointList();
-  listItemComponent = new PointListItem();
-  editPointComponent = new EditPoint();
-  // newPointFormComponent = new NewPointForm();
-
   constructor({mainContainer}) {
     this.mainContainer = mainContainer;
+    this.mainSortListComponent = new MainSortList();
+    this.pointListComponent = new PointList();
+    this.editPointComponent = new EditPoint();
+    // this.listItemComponent = new PointListItem();
+    // this.newPointFormComponent = new NewPointForm();
   }
 
   init() {
