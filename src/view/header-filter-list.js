@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const headerFilterListTemplate = () =>
   `<form class="trip-filters" action="#" method="get">
@@ -25,19 +25,8 @@ const headerFilterListTemplate = () =>
     <button class="visually-hidden" type="submit">Accept filter</button>
   </form>`;
 
-export default class HeaderFilterList {
-  getTemplate() {
+export default class HeaderFilterList extends AbstractView {
+  get template() {
     return headerFilterListTemplate();
-  }
-
-  getElement() {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

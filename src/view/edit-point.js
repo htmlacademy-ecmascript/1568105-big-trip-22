@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const pointEditTemplate = () =>
   `<li class="trip-events__item">
@@ -157,19 +157,24 @@ const pointEditTemplate = () =>
     </form>
   </li>`;
 
-export default class EditPoint {
-  getTemplate() {
+export default class EditPoint extends AbstractView {
+  #onSubmit = null;
+  constructor({point, offers, destination, onSubmit}) {
+    super();
+    this.point = point;
+    this.offers = offers;
+    this.destination = destination;
+    this.#onSubmit = onSubmit;
+    this.element.querySelector('.event').addEventListener('submit', this.#submitHandler);
+  }
+
+  get template() {
     return pointEditTemplate();
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
+  #submitHandler = (evt) => {
+    evt.preventDefault();
 
-  removeElement() {
-    this.element = null;
+    this.#onSubmit();
   }
 }
