@@ -15,5 +15,3 @@ const mainPresenter = new MainPresenter({mainContainer, pointModel});
 headerTopInfoPresenter.init();
 headerFilterPresenter.init();
 mainPresenter.init();
-
-console.log(pointModel.getPoint());
