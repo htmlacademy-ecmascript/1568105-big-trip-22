@@ -17,15 +17,13 @@ export default class MainPresenter {
 
   init() {
     this.boardPoint = [...this.pointModel.getPoint()];
-    
-    // console.log(this.boardPoint);
 
     render(this.mainSortListComponent, this.mainContainer);
     render(this.pointListComponent, this.mainContainer);
     render(this.editPointComponent, this.pointListComponent.getElement());
 
     for (let i = 0; i < this.boardPoint.length; i++) {
-      console.log([...this.pointModel.getOfferById(this.boardPoint[i].offers, this.boardPoint[i].type)]);
+
       render(
         new PointItem(
           {
