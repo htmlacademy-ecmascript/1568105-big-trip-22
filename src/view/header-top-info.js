@@ -1,4 +1,4 @@
-import { createElement } from "../render";
+import { createElement } from '../render.js';
 
 const headerInfoTemplate = () =>
   `<section class="trip-main__trip-info  trip-info">
@@ -13,7 +13,7 @@ const headerInfoTemplate = () =>
     </p>
   </section>`;
 
-class HeaderInfoView {
+export default class HeaderTopInfo {
   getTemplate() {
     return headerInfoTemplate();
   }
@@ -24,5 +24,8 @@ class HeaderInfoView {
     }
     return this.element;
   }
+
+  removeElement() {
+    this.element = null;
+  }
 }
-export default HeaderInfoView;
