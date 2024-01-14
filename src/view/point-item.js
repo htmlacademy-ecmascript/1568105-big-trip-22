@@ -29,8 +29,7 @@ function pointItemTemplate(point, destination, offers) {
               &plus;&euro;&nbsp;
               <span class="event__offer-price">${item.price}</span>
             </li>
-            `).join('')
-          }
+            `).join('')}
         </ul>
         <button class="event__favorite-btn event__favorite-btn--active" type="button">
           <span class="visually-hidden">Add to favorite</span>
@@ -54,7 +53,7 @@ export default class PointItem {
   }
 
   getTemplate() {
-    console.log(this.destination);
+    // console.log(this.destination);
     return pointItemTemplate(this.point, this.destination, this.offers);
   }
 
