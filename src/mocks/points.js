@@ -1,62 +1,91 @@
-// import { getRandomArrayElement } from './mock-utils.js';
-
-export const mockPoints = [
+const mockPoints = [
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808-1',
-    basePrice: 300,
+    id: 'point-1',
+    type: 'flight',
+    destination: 'mockDestination-1',
     dateFrom: '2019-07-10T22:55:56.845Z',
     dateTo: '2019-07-11T11:22:13.375Z',
-    destination: 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04-11',
-    isFavorite: true,
+    basePrice: 400,
     offers: [
-      'b4c3e4e6-9053-42ce-b747-e281314baa31',
-      'b4c3e4e6-9053-42ce-b747-e281314baa32',
-      'b4c3e4e6-9053-42ce-b747-e281314baa33',
-      'b4c3e4e6-9053-42ce-b747-e281314baa34',
-      'b4c3e4e6-9053-42ce-b747-e281314baa35'
+      'mockOffer-flight-1',
+      'mockOffer-flight-2',
+      'mockOffer-flight-3',
+      'mockOffer-flight-4',
+      'mockOffer-flight-5'
     ],
-    type: 'Flight'
+    isFavorite: true
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808-2',
-    basePrice: 30,
-    dateFrom: '2019-07-10T22:55:56.845Z',
-    dateTo: '2019-07-11T11:22:13.375Z',
-    destination: 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04-22',
-    isFavorite: true,
-    offers: [
-      'b4c3e4e6-9053-42ce-b747-e281314baa31',
-      'b4c3e4e6-9053-42ce-b747-e281314baa34'
-    ],
-    type: 'Flight'
-  },
-  {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808-3',
-    basePrice: 20,
+    id: 'point-2',
+    type: 'taxi',
+    destination: 'mockDestination-2',
     dateFrom: '2019-07-12T22:55:56.845Z',
     dateTo: '2019-07-13T11:22:13.375Z',
-    destination: 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04-33',
-    isFavorite: false,
-    offers: [],
-    type: 'Drive'
+    basePrice: 25,
+    offers: [
+      'offer-taxi-3'
+    ],
+    isFavorite: false
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808-3',
-    basePrice: 50,
+    id: 'point-3',
+    type: 'flight',
+    destination: 'mockDestination-3',
+    dateFrom: '2019-07-10T22:55:56.845Z',
+    dateTo: '2019-07-11T11:22:13.375Z',
+    basePrice: 30,
+    offers: [
+      'mockOffer-flight-2'
+    ],
+    isFavorite: true
+  },
+  {
+    id: 'point-4',
+    type: 'bus',
+    destination: 'mockDestination-4',
+    dateFrom: '2019-07-10T22:55:56.845Z',
+    dateTo: '2019-07-11T11:22:13.375Z',
+    basePrice: 30,
+    offers: [
+      'offer-bus-1'
+    ],
+    isFavorite: true
+  },
+  {
+    id: 'point-5',
+    type: 'check-in',
+    destination: 'mockDestination-4',
+    dateFrom: '2019-07-12T22:55:56.845Z',
+    dateTo: '2019-07-13T11:22:13.375Z',
+    basePrice: 100,
+    offers: [
+      'offer-check-in-5'
+    ],
+    isFavorite: false
+  },
+  {
+    id: 'point-5',
+    type: 'drive',
+    destination: 'mockDestination-5',
+    dateFrom: '2019-07-12T22:55:56.845Z',
+    dateTo: '2019-07-13T11:22:13.375Z',
+    basePrice: 15,
+    offers: [],
+    isFavorite: false
+  },
+  {
+    id: 'point-6',
+    type: 'sightseeing',
+    destination: 'mockDestination-5',
     dateFrom: '2019-07-11T22:55:56.845Z',
     dateTo: '2019-07-12T11:22:13.375Z',
-    destination: 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04-33',
-    isFavorite: true,
+    basePrice: 25,
     offers: [
-      'b4c3e4e6-9053-42ce-b747-e281314baa41',
-      'b4c3e4e6-9053-42ce-b747-e281314baa42'
+      'offer-sightseeing-1',
+      'offer-sightseeing-2'
     ],
-    type: 'Sightseeing'
+    isFavorite: true
   }
 ];
 
-// export function getRandomPoints() {
-//   return getRandomArrayElement(mockPoints);
-// }
-
-// type.значение сделать toLowerCase. как?
+export { mockPoints };
