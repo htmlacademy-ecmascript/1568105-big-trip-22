@@ -68,7 +68,7 @@ export default class PointPresenter {
 
     remove(previousPointComponent);
     remove(previousEditComponent);
-  };
+  }
 
   escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
@@ -82,12 +82,12 @@ export default class PointPresenter {
     this.#changeModeToEdit();
     replace(this.#editPointComponent, this.#pointComponent);
     this.#mode = Mode.EDITING;
-  };
+  }
 
   replaceFormToPoint() {
     replace(this.#pointComponent, this.#editPointComponent);
     this.#mode = Mode.DEFAULT;
-  };
+  }
 
   resetView() {
     if (this.#mode === Mode.EDITING) {

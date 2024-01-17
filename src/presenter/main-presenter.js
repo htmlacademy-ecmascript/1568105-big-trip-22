@@ -47,28 +47,20 @@ export default class MainPresenter {
       setFavorite: this.#setFavorite
     });
 
-    this.#pointPresentersList.set(pointData.id, pointPresenterComponent)
+    this.#pointPresentersList.set(pointData.id, pointPresenterComponent);
 
     pointPresenterComponent.init(pointData);
   }
 
   #changeModeHandler = () => {
     this.#pointPresentersList.forEach((presenter) => {
-      presenter.resetView()
-    })
-  }
+      presenter.resetView();
+    });
+  };
 
   #setFavorite = (point) => {
     const updatedPointId = this.boardPoint.findIndex((item) => item.id === point.id);
-    console.log(this.boardPoint[updatedPointId].isFavorite);
-
     this.boardPoint[updatedPointId].isFavorite = !this.boardPoint[updatedPointId].isFavorite;
-    console.log(this.boardPoint[updatedPointId].isFavorite);
-    console.log(this.#pointPresentersList.get(this.boardPoint[updatedPointId].id));
-
-
     this.#pointPresentersList.get(this.boardPoint[updatedPointId].id).init(this.boardPoint[updatedPointId]);
-
-
-  }
+  };
 }

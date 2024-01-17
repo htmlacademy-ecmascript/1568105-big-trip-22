@@ -77,6 +77,5 @@ export default class PointItem extends AbstractView {
     evt.preventDefault();
 
     this.#setFavorite(this.point);
-    // console.log('star-click');
   };
 }
