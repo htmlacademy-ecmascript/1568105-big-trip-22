@@ -1,20 +1,23 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import { humanizeDate } from '../utilities/utilities.js';
+import { DATE_FORMAT } from '../utilities/constants.js';
+
+// import dayjs from 'dayjs';
 
 function pointItemTemplate(point, destination, offers) {
-
   return (
     `<li class="trip-events__item">
       <div class="event">
-        <time class="event__date" datetime="2019-03-18">${point.dateFrom}</time>
+        <time class="event__date" datetime=${humanizeDate(point.dateFrom, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateFrom, DATE_FORMAT.monthDay)}</time>
         <div class="event__type">
           <img class="event__type-icon" width="42" height="42" src="img/icons/${point.type}.png" alt="Event type icon">
         </div>
         <h3 class="event__title">${point.type} ${destination.name}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+            <time class="event__start-time" datetime=${humanizeDate(point.dateFrom, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateFrom, DATE_FORMAT.hours)}</time>
             &mdash;
-            <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+            <time class="event__end-time" datetime=${humanizeDate(point.dateTo, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateTo, DATE_FORMAT.hours)}</time>
           </p>
           <p class="event__duration">30M</p>
         </div>
@@ -47,13 +50,17 @@ function pointItemTemplate(point, destination, offers) {
 
 export default class PointItem extends AbstractView {
   #onEditClick = null;
-  constructor({point, offers, destination, onEditClick}) {
+  #setFavorite = null;
+
+  constructor({point, offers, destination, onEditClick, setFavorite}) {
     super();
     this.point = point;
     this.offers = offers;
     this.destination = destination;
     this.#onEditClick = onEditClick;
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpHandler);
+    this.element.querySelector('.event__favorite-btn').addEventListener('click', this.#setFavoriteHandler);
+    this.#setFavorite = setFavorite;
   }
 
   get template() {
@@ -64,5 +71,12 @@ export default class PointItem extends AbstractView {
     evt.preventDefault();
 
     this.#onEditClick();
+  };
+
+  #setFavoriteHandler = (evt) => {
+    evt.preventDefault();
+
+    this.#setFavorite(this.point);
+    // console.log('star-click');
   };
 }

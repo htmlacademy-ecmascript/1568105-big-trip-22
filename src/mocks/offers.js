@@ -21,6 +21,16 @@ export const mockOffers = [
         id: 'offer-taxi-4',
         title: 'Non-smoking driver',
         price: 5
+      },
+      {
+        id: 'offer-taxi-5',
+        title: 'Carry the luggage',
+        price: 8
+      },
+      {
+        id: 'offer-taxi-6',
+        title: 'Name sign meeting',
+        price: 5
       }
     ]
   },
@@ -40,6 +50,11 @@ export const mockOffers = [
       {
         id: 'offer-bus-3',
         title: 'Extra Luggage',
+        price: 5
+      },
+      {
+        id: 'offer-bus-4',
+        title: 'Air-conditioner',
         price: 3
       }
     ]
@@ -108,49 +123,44 @@ export const mockOffers = [
     type: 'flight',
     offers: [
       {
-        id: 'mockOffer-flight-1',
-        title: 'Additional baggage',
+        id: 'offer-flight-1',
+        title: 'Add luggage',
         price: 30
       },
       {
-        id: 'mockOffer-flight-2',
-        title: 'Preselect Seats',
+        id: 'offer-flight-2',
+        title: 'Choose seats',
         price: 10
       },
       {
-        id: 'mockOffer-flight-3',
-        title: 'Upgrading to Comfort class',
-        price: 5
+        id: 'offer-flight-3',
+        title: 'Switch to comfort',
+        price: 75
       },
       {
-        id: 'mockOffer-flight-4',
-        title: 'À la Carte Menu',
+        id: 'offer-flight-4',
+        title: 'Add meal',
         price: 25
       },
       {
-        id: 'mockOffer-flight-5',
+        id: 'offer-flight-5',
         title: 'Flight insurance',
-        price: 5000
+        price: 225
       },
       {
-        id: 'mockOffer-flight-6',
+        id: 'offer-flight-6',
         title: 'Medical insurance',
-        price: 4000
+        price: 250
       },
       {
-        id: 'mockOffer-flight-7',
-        title: 'Medical insurance',
-        price: 4000
-      },
-      {
-        id: 'mockOffer-flight-8',
-        title: 'Travelling with pets',
-        price: 10
-      },
-      {
-        id: 'mockOffer-flight-9',
+        id: 'offer-flight-7',
         title: 'Aeroexpress',
         price: 20
+      },
+      {
+        id: 'offer-flight-8',
+        title: 'Travelling with pets',
+        price: 10
       }
     ]
   },
@@ -189,13 +199,18 @@ export const mockOffers = [
     offers: [
       {
         id: 'offer-sightseeing-1',
-        title: 'Book tickets',
-        price: 40
+        title: 'Lunch in city',
+        price: 30
       },
       {
         id: 'offer-sightseeing-2',
-        title: 'Lunch in city',
-        price: 30
+        title: 'Sightseeing telescope',
+        price: 2
+      },
+      {
+        id: 'offer-sightseeing-3',
+        title: 'Brief excursion',
+        price: 10
       }
     ]
   },
