@@ -1,7 +1,7 @@
 const DATE_FORMAT = {
-  yearMonthDay: 'YYYY-MM-D',
   monthDay: 'MMM D',
-  hours: 'HH:mm'
+  hours: 'HH:mm',
+  date: 'DD/MM/YY HH:mm'
 };
 
 const Mode = {
@@ -9,7 +9,8 @@ const Mode = {
   EDITING: 'EDITING',
 };
 
+
 export {
   DATE_FORMAT,
   Mode
-}
+};
