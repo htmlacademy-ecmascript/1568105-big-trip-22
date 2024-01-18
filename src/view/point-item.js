@@ -1,8 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizeDate } from '../utilities/utilities.js';
+import { humanizeDate, getDuration } from '../utilities/utilities.js';
 import { DATE_FORMAT } from '../utilities/constants.js';
-
-// import dayjs from 'dayjs';
 
 function pointItemTemplate(point, destination, offers) {
   return (
@@ -15,11 +13,11 @@ function pointItemTemplate(point, destination, offers) {
         <h3 class="event__title">${point.type} ${destination.name}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime=${humanizeDate(point.dateFrom, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateFrom, DATE_FORMAT.hours)}</time>
+            <time class="event__start-time" datetime=${humanizeDate(point.dateFrom, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateFrom, DATE_FORMAT.date)}</time>
             &mdash;
-            <time class="event__end-time" datetime=${humanizeDate(point.dateTo, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateTo, DATE_FORMAT.hours)}</time>
+            <time class="event__end-time" datetime=${humanizeDate(point.dateTo, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateTo, DATE_FORMAT.date)}</time>
           </p>
-          <p class="event__duration">30M</p>
+          <p class="event__duration">${getDuration(point.dateFrom, point.dateTo)}</p>
         </div>
         <p class="event__price">
           &euro;&nbsp;<span class="event__price-value">${point.basePrice}</span>

@@ -176,5 +176,5 @@ export default class EditPoint extends AbstractView {
     evt.preventDefault();
 
     this.#onSubmit();
-  }
+  };
 }
