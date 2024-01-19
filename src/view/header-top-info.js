@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
+
 const headerInfoTemplate = ({model}) =>
   `<section class="trip-main__trip-info  trip-info">
     <div class="trip-info__main">
@@ -17,7 +18,7 @@ export default class HeaderTopInfo extends AbstractView {
   constructor (pointModel) {
     super();
 
-    this.pointModel = pointModel
+    this.pointModel = pointModel;
   }
 
   get template() {

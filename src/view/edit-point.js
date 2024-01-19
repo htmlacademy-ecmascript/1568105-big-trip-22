@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import flatpickr from "flatpickr";
+import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const pointEditTemplate = ({state, model}) =>
@@ -134,8 +134,8 @@ export default class EditPoint extends AbstractStatefulView {
         ...this._state.point,
         destination: this.#model.getDestinationByName(evt.target.value).id
       }
-    })
-  }
+    });
+  };
 
   #changePriceHandler = (evt) => {
     this._setState({
@@ -143,8 +143,8 @@ export default class EditPoint extends AbstractStatefulView {
         ...this._state.point,
         basePrice: evt.target.value
       }
-    })
-  }
+    });
+  };
 
   #checkOffersHandler = () => {
     const checkedOffers = Array.from(document.querySelectorAll('.event__offer-checkbox'))
@@ -155,7 +155,7 @@ export default class EditPoint extends AbstractStatefulView {
         ...this._state.point,
         offers: [...checkedOffers]
       }
-    })
+    });
   };
 
   #chooseTypeHandler = (evt) => {
@@ -186,7 +186,7 @@ export default class EditPoint extends AbstractStatefulView {
       defaultDate: this._state.point.dateTo,
       onChange: this.#dateToChangeHandler
     });
-  }
+  };
 
   #dateFromChangeHandler = ([userDate], dateStr) => {
     this.updateElement({
