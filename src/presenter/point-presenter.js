@@ -44,8 +44,7 @@ export default class PointPresenter {
 
     this.#editPointComponent = new EditPoint({
       point: this.#pointData,
-      offers: [...this.#pointModel.getOfferById(this.#pointData.offers, this.#pointData.type)],
-      destination: this.#pointModel.getDestinationById(this.#pointData.destination),
+      model: this.#pointModel,
       onSubmit: () => {
         this.replaceFormToPoint();
 

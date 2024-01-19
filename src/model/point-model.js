@@ -11,31 +11,31 @@ export default class PointModel {
     return this.point;
   }
 
-  getOffer() {
+  getOffers() {
     return this.offers;
   }
 
-  getOfferByTipe(type) {
-    const allOffers = this.getOffer();
+  getOfferByType(type) {
+    const allOffers = this.getOffers();
     return allOffers.find((offer) => offer.type === type);
   }
-
-  // getOfferById(type, itemsId) {
-  //    const offersType = this.getOfferByTipe(type);
-  //    return offersType.offers.filter((item) => itemsId.find((id) => item.id === id));
-  // }
 
   getOfferById = (ids, type) => {
     const offers = mockOffers.find((item) => item.type === type).offers;
     return ids.map((item) => offers.find((element) => element.id === item));
   };
 
-  getDestination() {
+  getDestinations() {
     return this.destinations;
   }
 
   getDestinationById(id) {
-    const allDestination = this.getDestination();
+    const allDestination = this.getDestinations();
     return allDestination.find((item) => item.id === id);
+  }
+
+  getDestinationByName(name) {
+    const allDestination = this.getDestinations();
+    return allDestination.find((item) => item.name === name);
   }
 }

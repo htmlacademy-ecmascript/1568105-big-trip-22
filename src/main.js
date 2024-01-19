@@ -12,6 +12,6 @@ const headerTopInfoPresenter = new HeaderTopInfoPresenter({headerTripMainElement
 const headerFilterPresenter = new HeaderFilterPresenter({headerTripMainFiltersElement});
 const mainPresenter = new MainPresenter({mainContainer, pointModel});
 
-headerTopInfoPresenter.init();
+headerTopInfoPresenter.init({ pointModel });
 headerFilterPresenter.init();
 mainPresenter.init();
