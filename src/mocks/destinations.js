@@ -1,16 +1,28 @@
 export const mockDestinations = [
   {
     id: 'mockDestination-1',
-    description: 'Bangkok is the capital of Thailand. It is a beautiful and modern city!',
+    description: 'Bangkok, officially known in Thai as Krung Thep Maha Nakhon and colloquially as Krung Thep, is the capital and most populous city of Thailand.<br><br>Over 14 million people live within the surrounding Bangkok Metropolitan Region.',
     name: 'Bangkok',
     pictures: [
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/1.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/5.jpg',
         description: 'Dhurakij Pundit University'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/2.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/7.jpg',
         description: 'Bangkok Suvarnabhumi Airport'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/9.jpg',
+        description: 'Temple of the Golden Buddha "Wat Traimit"'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/14.jpg',
+        description: 'Bangkok Tuk Tuk Food Tour By Night'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/17.jpg',
+        description: 'Temple of the Emerald Buddha "Wat Phra Kaew"'
       }
     ]
   },
@@ -20,16 +32,20 @@ export const mockDestinations = [
     name: 'Don Mueang Airport',
     pictures: [
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/10.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/1.jpg',
         description: 'Departure Area'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/11.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/6.jpg',
         description: 'Arrival Area'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/12.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/13.jpg',
         description: 'Airfield, jets and sky at afternoon.'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/18.jpg',
+        description: 'Don Mueang Airport Modern Bangkok Hotel'
       }
     ]
   },
@@ -39,24 +55,32 @@ export const mockDestinations = [
     name: 'Phuket',
     pictures: [
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/3.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/1.jpg',
         description: 'Speedboat flies'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/4.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/2.jpg',
+        description: 'Phang Nga Bay Sea Cave Canoeing'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/8.jpg',
         description: 'Karon Beach Sunset'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/5.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/10.jpg',
         description: 'Ravai Fish Market'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/6.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/11.jpg',
         description: 'Longtail Boats'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/7.jpg',
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/16.jpg',
         description: 'Rock Beach Swing'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/20.jpg',
+        description: 'James Bond Island'
       }
     ]
   },
@@ -82,11 +106,27 @@ export const mockDestinations = [
     pictures: [
       {
         src: 'http://22.objects.htmlacademy.pro/static/destinations/8.jpg',
-        description: 'Cape Phrom Thep at Sunset'
+        description: 'Phrom Thep Monastery'
       },
       {
-        src: 'http://22.objects.htmlacademy.pro/static/destinations/9.jpg',
-        description: 'Phrom Thep Monastery'
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/10.jpg',
+        description: 'Phrom Thep Cape'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/11.jpg',
+        description: 'Snorkeling Spot Yanui Beach'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/12.jpg',
+        description: 'Ko Man Island'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/16.jpg',
+        description: 'Baan Khunying - Secluded Phuket Beachfront Villa'
+      },
+      {
+        src: 'http://22.objects.htmlacademy.pro/static/destinations/20.jpg',
+        description: 'Sangchai Beach'
       }
     ]
   }

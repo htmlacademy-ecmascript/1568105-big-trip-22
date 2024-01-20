@@ -28,4 +28,4 @@ const getDuration = (from, to) => {
   }
 };
 
-export { humanizeDate, getDuration, humanizeDuration };
+export { humanizeDate, humanizeDuration, getDuration };
