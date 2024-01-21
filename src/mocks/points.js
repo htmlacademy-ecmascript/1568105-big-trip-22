@@ -67,7 +67,7 @@ const mockPoints = [
     isFavorite: false
   },
   {
-    id: 'point-55',
+    id: 'point-6',
     type: 'drive',
     destination: 'mockDestination-5',
     dateFrom: '2023-01-21T14:30:13.845Z',
@@ -77,7 +77,7 @@ const mockPoints = [
     isFavorite: false
   },
   {
-    id: 'point-6',
+    id: 'point-7',
     type: 'sightseeing',
     destination: 'mockDestination-5',
     dateFrom: '2023-01-21T16:00:13.845Z',
