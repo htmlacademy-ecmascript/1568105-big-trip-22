@@ -1,7 +1,7 @@
 export const mockDestinations = [
   {
     id: 'mockDestination-1',
-    description: 'Bangkok, officially known in Thai as Krung Thep Maha Nakhon and colloquially as Krung Thep, is the capital and most populous city of Thailand.<br><br>Over 14 million people live within the surrounding Bangkok Metropolitan Region.',
+    description: '<b>Bangkok</b>, officially known in Thai as <b>Krung Thep Maha Nakhon</b> and colloquially as Krung Thep, is the capital and most populous city of Thailand.<br><br>Over 14 million people live within the surrounding Bangkok Metropolitan Region.',
     name: 'Bangkok',
     pictures: [
       {
@@ -28,7 +28,7 @@ export const mockDestinations = [
   },
   {
     id: 'mockDestination-2',
-    description: 'One of two airports serving Bangkok and the surrounding area. Oldest in Asia, opened in 1914.',
+    description: 'One of two airports serving Bangkok and the surrounding area. <b>Oldest in Asia</b>, opened in 1914.',
     name: 'Don Mueang Airport',
     pictures: [
       {
@@ -51,7 +51,7 @@ export const mockDestinations = [
   },
   {
     id: 'mockDestination-3',
-    description: 'Phuket, is a Peninsula of a Dream. Hotels, resorts, beaches, local markets, bike rides, speed-boat trips an many more.',
+    description: 'Phuket, is a <b>Peninsula of a Dream</b>. Hotels, resorts, beaches, local markets, bike rides, speed-boat trips an many more.',
     name: 'Phuket',
     pictures: [
       {
@@ -102,7 +102,7 @@ export const mockDestinations = [
   {
     id: 'mockDestination-5',
     description: 'Cape Phrom Thep, is a beautiful city, a true asian pearl, with crowded streets.',
-    name: 'Cape Phrom Thep',
+    name: 'Phrom Thep',
     pictures: [
       {
         src: 'http://22.objects.htmlacademy.pro/static/destinations/8.jpg',

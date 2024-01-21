@@ -25,6 +25,11 @@ export default class PointModel {
     return ids.map((item) => offers.find((element) => element.id === item));
   };
 
+  getOfferPriceById = (id, type) => {
+    const offer = mockOffers.find((item) => item.type === type).offers;
+    return offer.find((item) => item.id === id).price;
+  };
+
   getDestinations() {
     return this.destinations;
   }
