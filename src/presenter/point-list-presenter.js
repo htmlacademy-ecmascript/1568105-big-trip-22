@@ -1,4 +1,5 @@
 import PointPresenter from './point-presenter.js';
+import {UserAction, UpdateType} from '../utilities/constants.js';
 
 export default class PointListPresenter {
   #pointModel = null;
@@ -8,7 +9,6 @@ export default class PointListPresenter {
   #data = null;
 
   #pointPresentersList = new Map();
-
 
   constructor({ container }) {
     this.#container = container;
@@ -24,7 +24,7 @@ export default class PointListPresenter {
     //sorting
     //filtering
 
-    this.#renderPointsList();
+    this.renderPointsList();
   }
 
   #sorting(points) {
@@ -39,7 +39,7 @@ export default class PointListPresenter {
     }
   }
 
-  #renderPointsList() {
+  renderPointsList() {
     this.#clearPoints();
     for (let i = 0; i < this.#data.length; i++) {
       this.#renderPoint((this.#data[i]));
@@ -57,7 +57,8 @@ export default class PointListPresenter {
       container: this.#container.element,
       pointModel: this.#pointModel,
       changeModeToEdit: this.#changeModeHandler,
-      setFavorite: this.#setFavorite
+      setFavorite: this.#setFavorite,
+      onDataChange: this.#handleAnyViewAction
     });
 
     this.#pointPresentersList.set(pointData.id, pointPresenterComponent);
@@ -65,15 +66,37 @@ export default class PointListPresenter {
   }
 
   #setFavorite = (point) => {
-    const updatedPointId = this.#data.findIndex((item) => item.id === point.id);
-    this.#data[updatedPointId].isFavorite = !this.#data[updatedPointId].isFavorite;
-    this.#pointPresentersList.get(this.#data[updatedPointId].id).init(this.#data[updatedPointId]);
+    this.#handleAnyViewAction(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      {
+        ...point,
+        isFavorite: !point.isFavorite
+      }
+    )
   };
-
 
   #changeModeHandler = () => {
     this.#pointPresentersList.forEach((presenter) => {
       presenter.resetView();
     });
   };
+
+  #handleAnyViewAction = (actionType, updateType, point) => {
+    switch (actionType) {
+      case UserAction.UPDATE_POINT:
+        this.#pointModel.updatePoint(updateType, point);
+        break;
+      case UserAction.ADD_POINT:
+        this.#pointModel.addPoint(updateType, point);
+        break;
+      case UserAction.DELETE_POINT:
+        this.#pointModel.deletePoint(updateType, point);
+        break;
+    }
+  };
+
+  updatePoint(point){
+    this.#pointPresentersList.get(point.id)?.init(point);
+  }
 }
