@@ -10,10 +10,8 @@ function headerInfoTemplate({model}) {
       const dashHellipDash = '&nbsp;&mdash;&nbsp;&hellip;&nbsp;&mdash;&nbsp;';
 
       return `${startPoint}${dashHellipDash}${endPoint}`;
-    } else if (model.getPoint().length === 0) {
+    };
 
-      return 'Design your jorney. Make first point!';
-    }
     return model.getPoint().map((point) =>
       `${model.getDestinationById(point.destination).name}`).join('&nbsp;&mdash;&nbsp;');
   }
@@ -23,8 +21,6 @@ function headerInfoTemplate({model}) {
     const dateTo = humanizeDate(model.getPoint()[model.getPoint().length - 1].dateTo, DATE_FORMAT.monthDay);
 
     // дописать проверку model.getPoint().length === 1 // стартовое время [0] даты
-    // дописать проверку model.getPoint().length === 0 // ''
-    // когда массив points пустой, сайт падает и Cannot read properties of undefined (reading 'dateFrom')
 
     return `${dateFrom}&nbsp;&mdash;&nbsp${dateTo}`;
   }
@@ -44,13 +40,13 @@ function headerInfoTemplate({model}) {
   return (
     `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
-        <h1 class="trip-info__title">${compileRouteInfo()}</h1>
+        <h1 class="trip-info__title">${model.getPoint().length ? compileRouteInfo() : 'Design your jorney. Make first point!'}</h1>
 
-        <p class="trip-info__dates">${compileRouteTime()}</p>
+        <p class="trip-info__dates">${model.getPoint().length ? compileRouteTime() : ''}</p>
       </div>
 
       <p class="trip-info__cost">
-        Total: &euro;&nbsp;<span class="trip-info__cost-value">${getRouteSum()}</span>
+        Total: &euro;&nbsp;<span class="trip-info__cost-value">${model.getPoint().length ? getRouteSum() : '0'}</span>
       </p>
     </section>`
   );

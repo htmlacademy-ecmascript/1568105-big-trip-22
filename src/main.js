@@ -15,3 +15,7 @@ const mainPresenter = new MainPresenter({mainContainer, pointModel});
 headerTopInfoPresenter.init({ pointModel });
 headerFilterPresenter.init();
 mainPresenter.init();
+
+pointModel.addObserver(() => {
+  headerTopInfoPresenter.init({ pointModel });
+});

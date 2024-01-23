@@ -107,7 +107,7 @@ export default class PointPresenter {
       point
     );
     document.removeEventListener('keydown', this.escKeyDownHandler);
-  }
+  };
 
   #onDataDeleteHandler = (point) => {
     this.#onDataChange(
@@ -115,5 +115,5 @@ export default class PointPresenter {
       UpdateType.MAJOR,
       point
     );
-  }
+  };
 }

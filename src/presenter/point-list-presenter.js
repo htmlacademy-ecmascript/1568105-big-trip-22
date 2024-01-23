@@ -41,9 +41,12 @@ export default class PointListPresenter {
 
   renderPointsList() {
     this.#clearPoints();
-    for (let i = 0; i < this.#data.length; i++) {
-      this.#renderPoint((this.#data[i]));
-    }
+    this.#sorting([...this.#pointModel.getPoint()]).forEach((item) => {
+      this.#renderPoint(item);
+    });
+    // for (let i = 0; i < this.#data.length; i++) {
+    //   this.#renderPoint((this.#data[i]));
+    // }
   }
 
   #clearPoints = () => {
@@ -73,7 +76,7 @@ export default class PointListPresenter {
         ...point,
         isFavorite: !point.isFavorite
       }
-    )
+    );
   };
 
   #changeModeHandler = () => {
