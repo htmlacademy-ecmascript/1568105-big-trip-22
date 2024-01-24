@@ -1,5 +1,7 @@
 const DATE_FORMAT = {
   monthDay: 'MMM D',
+  dayMonth: 'D MMM',
+  day: 'D',
   hours: 'HH:mm',
   date: 'DD/MM/YY HH:mm'
 };

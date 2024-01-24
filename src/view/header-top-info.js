@@ -10,17 +10,17 @@ function headerInfoTemplate({model}) {
       const dashHellipDash = '&nbsp;&mdash;&nbsp;&hellip;&nbsp;&mdash;&nbsp;';
 
       return `${startPoint}${dashHellipDash}${endPoint}`;
-    };
+    }
 
     return model.getPoint().map((point) =>
       `${model.getDestinationById(point.destination).name}`).join('&nbsp;&mdash;&nbsp;');
   }
 
   function compileRouteTime() {
-    const dateFrom = humanizeDate(model.getPoint()[0].dateFrom, DATE_FORMAT.monthDay);
-    const dateTo = humanizeDate(model.getPoint()[model.getPoint().length - 1].dateTo, DATE_FORMAT.monthDay);
+    const dateFrom = humanizeDate(model.getPoint()[0].dateFrom, DATE_FORMAT.dayMonth);
+    const dateTo = humanizeDate(model.getPoint()[model.getPoint().length - 1].dateTo, DATE_FORMAT.dayMonth);
 
-    // дописать проверку model.getPoint().length === 1 // стартовое время [0] даты
+    // const firstday = humanizeDate(model.getPoint()[0].dateFrom, DATE_FORMAT.day);
 
     return `${dateFrom}&nbsp;&mdash;&nbsp${dateTo}`;
   }
@@ -34,8 +34,6 @@ function headerInfoTemplate({model}) {
   function getRouteSum () {
     return model.getPoint().reduce((acc, point) => acc + getPointSum(point), 0);
   }
-
-
 
   return (
     `<section class="trip-main__trip-info  trip-info">

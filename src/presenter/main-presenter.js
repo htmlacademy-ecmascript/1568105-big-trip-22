@@ -6,15 +6,19 @@ import { UpdateType } from '../utilities/constants.js';
 
 export default class MainPresenter {
   pointListComponent = new PointList();
-  #pointListPresenter = new PointListPresenter({
-    container: this.pointListComponent,
-  });
+
+  #pointListPresenter = null;
 
   constructor({ mainContainer, pointModel }) {
     this.mainContainer = mainContainer;
     this.pointModel = pointModel;
     this.mainSortListComponent = new MainSortList({
       onSort: this.#sortingHandler
+    });
+
+    this.#pointListPresenter = new PointListPresenter({
+      container: this.pointListComponent,
+      pointModel : this.pointModel
     });
     this.pointModel.addObserver(this.#handleModelEvent);
   }
@@ -25,6 +29,7 @@ export default class MainPresenter {
         this.#pointListPresenter.updatePoint(data);
         break;
       case UpdateType.MINOR:
+        this.#pointListPresenter.renderPointsList();
 
         break;
       case UpdateType.INIT:
