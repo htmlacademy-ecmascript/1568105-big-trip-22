@@ -23,9 +23,17 @@ const UpdateType = {
   MAJOR: 'MAJOR',
 };
 
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past'
+};
+
 export {
   DATE_FORMAT,
   Mode,
   UserAction,
-  UpdateType
+  UpdateType,
+  FilterType
 };

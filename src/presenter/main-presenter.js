@@ -9,18 +9,21 @@ export default class MainPresenter {
 
   #pointListPresenter = null;
 
-  constructor({ mainContainer, pointModel }) {
+  constructor({ mainContainer, pointModel, filterModel }) {
     this.mainContainer = mainContainer;
     this.pointModel = pointModel;
+    this.filterModel = filterModel;
     this.mainSortListComponent = new MainSortList({
       onSort: this.#sortingHandler
     });
 
     this.#pointListPresenter = new PointListPresenter({
       container: this.pointListComponent,
-      pointModel : this.pointModel
+      pointModel: this.pointModel,
+      filterModel: this.filterModel
     });
     this.pointModel.addObserver(this.#handleModelEvent);
+    this.filterModel.addObserver(this.#handleModelEvent);
   }
 
   #handleModelEvent = (updateType, data) => {

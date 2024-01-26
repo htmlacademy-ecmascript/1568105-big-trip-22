@@ -1,5 +1,5 @@
 import PointPresenter from './point-presenter.js';
-import { UserAction, UpdateType } from '../utilities/constants.js';
+import { UserAction, UpdateType, FilterType } from '../utilities/constants.js';
 import NewPointPresenter from './new-point-presenter.js';
 
 export default class PointListPresenter {
@@ -8,12 +8,14 @@ export default class PointListPresenter {
   #filter = null;
   #container = null;
   #data = null;
+  #filterModel = null;
 
   #pointPresentersList = new Map();
 
-  constructor({ container, pointModel }) {
+  constructor({ container, pointModel, filterModel }) {
     this.#container = container;
     this.#pointModel = pointModel;
+    this.#filterModel = filterModel;
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
       onDataAdd: this.#handleAnyViewAction
@@ -22,12 +24,8 @@ export default class PointListPresenter {
     this.newPointPresenter.init();
   }
 
-  init({ sort, filter }) {
+  init({ sort }) {
     this.#sort = sort;
-    this.#filter = filter;
-    this.#data = this.#sorting([...this.#pointModel.getPoint()]);
-    //sorting
-    //filtering
     this.renderPointsList();
   }
 
@@ -42,9 +40,22 @@ export default class PointListPresenter {
     }
   }
 
+  #filtering(points) {
+    switch (this.#filterModel.filter) {
+      case FilterType.FUTURE:
+        return points.filter((item) => new Date(item.dateFrom) > Date.now());
+      case FilterType.PRESENT:
+        return points.filter((item) => new Date(item.dateFrom) === Date.now());
+      case FilterType.PAST:
+        return points.filter((item) => new Date(item.dateFrom) < Date.now());
+      default:
+        return points;
+    }
+  }
+
   renderPointsList() {
     this.#clearPoints();
-    this.#sorting([...this.#pointModel.getPoint()]).forEach((item) => {
+    this.#sorting(this.#filtering([...this.#pointModel.getPoint()])).forEach((item) => {
       this.#renderPoint(item);
     });
   }

@@ -42,7 +42,7 @@ export default class NewPointPresenter {
       onDelete: this.#onCancelHandler
     });
 
-    render(this.#newPointComponent, document.querySelector('.trip-events__list'),'beforebegin');
+    render(this.#newPointComponent, document.querySelector('.trip-events__list'),'afterbegin');
   }
 
   #onCancelHandler = () => {
