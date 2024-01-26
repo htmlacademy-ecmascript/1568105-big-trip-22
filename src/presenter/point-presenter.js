@@ -2,6 +2,7 @@ import { remove, render, replace } from '../framework/render.js';
 import { Mode } from '../utilities/constants.js';
 import PointItem from '../view/point-item.js';
 import EditPoint from '../view/edit-point.js';
+import { UserAction, UpdateType } from '../utilities/constants.js';
 
 export default class PointPresenter {
   #pointData = null;
@@ -12,12 +13,14 @@ export default class PointPresenter {
   #mode = Mode.DEFAULT;
   #changeModeToEdit = null;
   #setFavorite = null;
+  #onDataChange = null;
 
-  constructor ({container, pointModel, changeModeToEdit, setFavorite}) {
+  constructor ({container, pointModel, changeModeToEdit, setFavorite, onDataChange}) {
     this.#container = container;
     this.#pointModel = pointModel;
     this.#changeModeToEdit = changeModeToEdit;
     this.#setFavorite = setFavorite;
+    this.#onDataChange = onDataChange;
   }
 
   init(onePointData) {
@@ -45,11 +48,8 @@ export default class PointPresenter {
     this.#editPointComponent = new EditPoint({
       point: this.#pointData,
       model: this.#pointModel,
-      onSubmit: () => {
-        this.replaceFormToPoint();
-
-        document.removeEventListener('keydown', this.escKeyDownHandler);
-      }
+      onSubmit: this.#onDataChangeHandler,
+      onDelete: this.#onDataDeleteHandler
     });
 
     if (previousPointComponent === null || previousEditComponent === null) {
@@ -98,4 +98,22 @@ export default class PointPresenter {
     remove(this.#pointComponent);
     remove(this.#editPointComponent);
   }
+
+  #onDataChangeHandler = (point) => {
+    this.replaceFormToPoint();
+    this.#onDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      point
+    );
+    document.removeEventListener('keydown', this.escKeyDownHandler);
+  };
+
+  #onDataDeleteHandler = (point) => {
+    this.#onDataChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MAJOR,
+      point
+    );
+  };
 }
