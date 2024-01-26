@@ -1,14 +1,19 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
+
 function createAddNewPointButton({ disabled }) {
   return `
-    <button class="trip-main__event-add-btn  btn  btn--big  btn--yellow" type="button" ${disabled ? 'disabled' : ''}>New event</button>`}
+    <button
+      class="trip-main__event-add-btn  btn  btn--big  btn--yellow"
+      type="button" ${disabled ? 'disabled' : ''}
+    >New event</button>`;
+}
 
-export default class AddNewPointButton extends AbstractStatefulView {
+export default class AddNewPointButtonView extends AbstractStatefulView {
   #onClick = null;
   constructor({ onClick }) {
     super();
     this.#onClick = onClick;
-    this._setState(AddNewPointButton.parseAddModeState(false));
+    this._setState(AddNewPointButtonView.parseAddModeState(false));
     this._restoreHandlers();
   }
 
@@ -30,12 +35,11 @@ export default class AddNewPointButton extends AbstractStatefulView {
       addingMode: !this._state.addingMode
     });
     this.#onClick();
-  }
+  };
 
   reset = () => {
     this.updateElement({
       addingMode: !this._state.addingMode
     });
-  }
-
+  };
 }

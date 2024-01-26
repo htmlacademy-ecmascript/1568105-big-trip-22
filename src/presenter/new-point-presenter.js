@@ -1,4 +1,4 @@
-import { render, remove, RenderPosition } from '../framework/render.js';
+import { render, remove } from '../framework/render.js';
 import AddNewPointButton from '../view/add-point-button.js';
 import EditPoint from '../view/edit-point.js';
 import { UserAction, UpdateType } from '../utilities/constants.js';
@@ -20,7 +20,7 @@ export default class NewPointPresenter {
 
   constructor({ pointModel, onDataAdd }) {
     this.#pointModel = pointModel;
-    this.#onDataAdd = onDataAdd
+    this.#onDataAdd = onDataAdd;
 
     this.addNewPointButton = new AddNewPointButton({
       onClick: () => {
@@ -48,7 +48,7 @@ export default class NewPointPresenter {
   #onCancelHandler = () => {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
-  }
+  };
 
   #addPointHandler = (point) => {
     remove(this.#newPointComponent);
@@ -58,5 +58,5 @@ export default class NewPointPresenter {
       UpdateType.MINOR,
       point,
     );
-  }
+  };
 }
