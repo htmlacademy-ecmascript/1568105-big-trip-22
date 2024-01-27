@@ -36,6 +36,7 @@ export default class MainPresenter {
 
         break;
       case UpdateType.INIT:
+        this.#pointListPresenter.renderPointsList();
 
         break;
       case UpdateType.MAJOR:

@@ -30,10 +30,25 @@ const FilterType = {
   PAST: 'past'
 };
 
+const EndPoints = {
+  POINTS: 'points',
+  DESTINATIONS: 'destinations',
+  OFFERS: 'offers'
+}
+
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
+};
+
 export {
   DATE_FORMAT,
   Mode,
   UserAction,
   UpdateType,
-  FilterType
+  FilterType,
+  EndPoints,
+  Method
 };

@@ -1,19 +1,35 @@
-import { mockDestinations } from '../mocks/destinations.js';
-import { mockOffers } from '../mocks/offers.js';
-import { mockPoints } from '../mocks/points.js';
 import Observable from '../framework/observable.js';
+import { UpdateType } from '../utilities/constants.js';
 
 export default class PointModel extends Observable {
-  point = mockPoints;
-  offers = mockOffers;
-  destinations = mockDestinations;
+  #offers = null;
+  #destinations = null;
+  #points = null;
+
+  constructor({ service }) {
+    super();
+    this.pointApiService = service;
+  }
+
+  async init() {
+    try {
+      const points = await this.pointApiService.points;
+      console.log(points);
+
+      this.#points = points.map(this.#adaptToClient);
+      this.#offers = await this.pointApiService.offers;
+      this.#destinations = await this.pointApiService.destinations;
+
+      this._notify(UpdateType.INIT, { isError: false });
+    } catch (err) { }
+  }
 
   getPoint() {
-    return this.point;
+    return this.#points;
   }
 
   getOffers() {
-    return this.offers;
+    return this.#offers;
   }
 
   getOfferByType(type) {
@@ -22,17 +38,17 @@ export default class PointModel extends Observable {
   }
 
   getOfferById = (ids, type) => {
-    const offers = mockOffers.find((item) => item.type === type).offers;
+    const offers = this.getOffers().find((item) => item.type === type).offers;
     return ids.map((item) => offers.find((element) => element.id === item));
   };
 
   getOfferPriceById = (id, type) => {
-    const offer = mockOffers.find((item) => item.type === type).offers;
+    const offer = this.getOffers().find((item) => item.type === type).offers;
     return offer.find((item) => item.id === id).price;
   };
 
   getDestinations() {
-    return this.destinations;
+    return this.#destinations;
   }
 
   getDestinationById(id) {
@@ -81,5 +97,22 @@ export default class PointModel extends Observable {
     ];
 
     this._notify(updateType, update);
+  }
+
+  #adaptToClient(point) {
+    const adaptedPoint = {
+      ...point,
+      basePrice: point['base_price'],
+      dateFrom: point['date_from'],
+      dateTo: point['date_to'],
+      isFavorite: point['is_favorite'],
+    };
+
+    delete adaptedPoint['base_price'];
+    delete adaptedPoint['date_from'];
+    delete adaptedPoint['date_to'];
+    delete adaptedPoint['is_favorite'];
+
+    return adaptedPoint;
   }
 }
