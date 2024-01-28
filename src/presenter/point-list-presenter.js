@@ -1,6 +1,9 @@
+import { render } from '../framework/render.js';
 import PointPresenter from './point-presenter.js';
-import { UserAction, UpdateType, FilterType } from '../utilities/constants.js';
+import { UserAction, UpdateType, FilterType, TimeLimit } from '../utilities/constants.js';
 import NewPointPresenter from './new-point-presenter.js';
+import UIBlocker from '../framework/ui-blocker/ui-blocker.js';
+import ListEmpty from '../view/list-empty.js';
 
 export default class PointListPresenter {
   #pointModel = null;
@@ -11,6 +14,11 @@ export default class PointListPresenter {
   #filterModel = null;
 
   #pointPresentersList = new Map();
+
+  #uiBlocker = new UIBlocker({
+    lowerLimit: TimeLimit.LOWER_LIMIT,
+    upperLimit: TimeLimit.UPPER_LIMIT,
+  });
 
   constructor({ container, pointModel, filterModel }) {
     this.#container = container;
@@ -55,10 +63,24 @@ export default class PointListPresenter {
 
   renderPointsList() {
     this.#clearPoints();
-    this.#sorting(this.#filtering([...this.#pointModel.getPoint()])).forEach((item) => {
-      this.#renderPoint(item);
-    });
+
+    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
+
+    if (list.length > 0) {
+      list.forEach((item) => {
+        this.#renderPoint(item);
+      });
+    } else {
+      // console.log(this.#filterModel.filter);
+      this.#renderMessage();
+    }
   }
+
+  #renderMessage = () => {
+    const message = new ListEmpty({ filter: this.#filterModel.filter });
+
+    render(message, document.querySelector('.trip-events'));
+  };
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {
@@ -96,18 +118,37 @@ export default class PointListPresenter {
     });
   };
 
-  #handleAnyViewAction = (actionType, updateType, point) => {
+  #handleAnyViewAction = async (actionType, updateType, point) => {
+    this.#uiBlocker.block();
+
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointModel.updatePoint(updateType, point);
+        this.#pointPresentersList.get(point.id).setSaving();
+        try {
+          await this.#pointModel.updatePoint(updateType, point);
+        } catch (error) {
+
+        }
         break;
       case UserAction.ADD_POINT:
-        this.#pointModel.addPoint(updateType, point);
+        this.#pointPresentersList.get(point.id).setSaving();
+        try {
+          await this.#pointModel.addPoint(updateType, point);
+        } catch (error) {
+
+        }
         break;
       case UserAction.DELETE_POINT:
-        this.#pointModel.deletePoint(updateType, point);
+        this.#pointPresentersList.get(point.id).setDeleting();
+        try {
+          await this.#pointModel.deletePoint(updateType, point);
+        } catch (error) {
+
+        }
         break;
     }
+
+    this.#uiBlocker.unblock();
   };
 
   updatePoint(point){
