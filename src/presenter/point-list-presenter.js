@@ -71,7 +71,6 @@ export default class PointListPresenter {
         this.#renderPoint(item);
       });
     } else {
-      // console.log(this.#filterModel.filter);
       this.#renderMessage();
     }
   }
