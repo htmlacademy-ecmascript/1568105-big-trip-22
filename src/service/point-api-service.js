@@ -21,7 +21,7 @@ export default class PointApiService extends ApiService {
     const response = await this._load({
       url: `${EndPoints.POINTS}/${point.id}`,
       method: Method.PUT,
-      body: JSON.stringify(point),
+      body: JSON.stringify(this.#adaptToServer(point)),
       headers: new Headers({ 'Content-Type': 'application/json' }),
     });
 
@@ -52,20 +52,22 @@ export default class PointApiService extends ApiService {
   }
 
   #adaptToServer(point) {
-    const adaptedPoint = {...point,
-      // 'due_date': task.dueDate instanceof Date ? task.dueDate.toISOString() : null, // На сервере дата хранится в ISO формате
-      // 'is_archived': task.isArchive,
-      // 'is_favorite': task.isFavorite,
-      // 'repeating_days': task.repeating,
+    const adaptedPoint = {
+      ...point,
+      'base_price': Number(point.basePrice),
+      'date_from': point.dateFrom,
+      'date_to': point.dateTo,
+      'is_favorite': point.isFavorite,
     };
 
-    // // Ненужные ключи мы удаляем
-    // delete adaptedTask.dueDate;
-    // delete adaptedTask.isArchive;
-    // delete adaptedTask.isFavorite;
-    // delete adaptedTask.repeating;
+    if (point.id === 0) {
+      delete adaptedPoint.id;
+    }
+    delete adaptedPoint.basePrice;
+    delete adaptedPoint.dateFrom;
+    delete adaptedPoint.dateTo;
+    delete adaptedPoint.isFavorite;
 
     return adaptedPoint;
   }
-
 }

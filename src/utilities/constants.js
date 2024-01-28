@@ -34,13 +34,25 @@ const EndPoints = {
   POINTS: 'points',
   DESTINATIONS: 'destinations',
   OFFERS: 'offers'
-}
+};
 
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
   POST: 'POST',
   DELETE: 'DELETE'
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+const EmptyListMessage = {
+  EVERYTHING: 'Click New Event to create your first point',
+  PAST: 'There are no past events now',
+  PRESENT: 'There are no present events now',
+  FUTURE: 'There are no future events now'
 };
 
 export {
@@ -50,5 +62,7 @@ export {
   UpdateType,
   FilterType,
   EndPoints,
-  Method
+  Method,
+  TimeLimit,
+  EmptyListMessage
 };

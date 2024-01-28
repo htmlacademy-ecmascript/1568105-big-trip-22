@@ -28,7 +28,6 @@ export default class PointPresenter {
     this.#renderPoint();
   }
 
-
   #renderPoint() {
     const previousPointComponent = this.#pointComponent;
     const previousEditComponent = this.#editPointComponent;
@@ -62,7 +61,8 @@ export default class PointPresenter {
     }
 
     if (this.#mode === Mode.EDITING) {
-      replace(this.#editPointComponent, previousEditComponent);
+      replace(this.#pointComponent, previousEditComponent);
+      this.#mode = Mode.DEFAULT;
     }
 
     remove(previousPointComponent);
@@ -100,7 +100,6 @@ export default class PointPresenter {
   }
 
   #onDataChangeHandler = (point) => {
-    this.replaceFormToPoint();
     this.#onDataChange(
       UserAction.UPDATE_POINT,
       UpdateType.PATCH,
@@ -115,5 +114,23 @@ export default class PointPresenter {
       UpdateType.MAJOR,
       point
     );
+  };
+
+  setSaving = () => {
+    if (this.#mode === Mode.EDITING) {
+      this.#editPointComponent.updateElement({
+        isSaving: true,
+        isDisabled: true
+      });
+    }
+  };
+
+  setDeleting = () => {
+    if (this.#mode === Mode.EDITING) {
+      this.#editPointComponent.updateElement({
+        isDeleting: true,
+        isDisabled: true
+      });
+    }
   };
 }

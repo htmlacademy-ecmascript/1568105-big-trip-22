@@ -32,7 +32,7 @@ const pointEditTemplate = ({state, model}) =>
           <input class="event__input  event__input--destination"
             id="event-destination-1" type="text"
             name="event-destination" value="${state.point.destination ? model.getDestinationById(state.point.destination).name : ''}"
-            list="destination-list-1">
+            list="destination-list-1" required>
           <datalist id="destination-list-1">
             ${model.getDestinations().length ? model.getDestinations().map((item) => `<option value="${item.name}"></option>`).join('') : ''}
           </datalist>
@@ -40,10 +40,10 @@ const pointEditTemplate = ({state, model}) =>
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 12:25">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 12:25" required>
           &mdash;
           <label class="visually-hidden" for="event-end-time-1">To</label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 13:35">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 13:35" required>
         </div>
 
         <div class="event__field-group  event__field-group--price">
@@ -51,11 +51,17 @@ const pointEditTemplate = ({state, model}) =>
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value=${state.point.basePrice}>
+          <input class="event__input  event__input--price" id="event-price-1" type="number" name="event-price" value=${state.point.basePrice}>
         </div>
 
-        <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-        <button class="event__reset-btn" type="reset">Delete</button>
+        <button
+          class="event__save-btn  btn  btn--blue"
+          type="submit" ${state.isDisabled ? 'disabled' : ''}
+        >${state.isSaving ? 'saving' : 'Save'}</button>
+        <button
+          class="event__reset-btn"
+          type="reset"
+          ${state.isDisabled ? 'disabled' : ''}>${state.isDeleting ? 'Deleting' : 'Delete'}</button>
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
         </button>
@@ -114,9 +120,21 @@ export default class EditPoint extends AbstractStatefulView {
     this._restoreHandlers();
   }
 
-  static parsePointToState = (point) => ({point});
+  static parsePointToState = (point) => ({
+    point: {...point},
+    isSaving: false,
+    isDeleting: false,
+    isDisabled: false
+  });
 
-  static parseStateToPoint = (state) => state.point;
+  static parseStateToPoint = (state) => {
+    const point = {...state};
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
+    return point;
+  };
 
   _restoreHandlers() {
     this.element.querySelector('.event').addEventListener('submit', this.#submitHandler);
@@ -180,7 +198,7 @@ export default class EditPoint extends AbstractStatefulView {
       altInput: true,
       enableTime: true,
       altFormat: 'd/m/Y H:i',
-      defaultDate: this._state.point.dateFrom,
+      defaultDate: this._state.point.dateFrom ? this._state.point.dateFrom : Date.now(),
       onChange: this.#dateFromChangeHandler
     });
 
@@ -189,7 +207,7 @@ export default class EditPoint extends AbstractStatefulView {
       enableTime: true,
       altFormat: 'd/m/Y H:i',
       altInput: true,
-      defaultDate: this._state.point.dateTo,
+      defaultDate: this._state.point.dateTo ? this._state.point.dateTo : Date.now(),
       onChange: this.#dateToChangeHandler
     });
   };
