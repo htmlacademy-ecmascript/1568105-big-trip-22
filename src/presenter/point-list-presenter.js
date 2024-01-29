@@ -1,11 +1,11 @@
 import { render, remove } from '../framework/render.js';
 import PointPresenter from './point-presenter.js';
-import { 
-  UserAction, 
-  UpdateType, 
-  FilterType, 
-  TimeLimit, 
-  EmptyListMessage 
+import {
+  UserAction,
+  UpdateType,
+  FilterType,
+  TimeLimit,
+  EmptyListMessage
 } from '../utilities/constants.js';
 import NewPointPresenter from './new-point-presenter.js';
 import UIBlocker from '../framework/ui-blocker/ui-blocker.js';
@@ -73,7 +73,7 @@ export default class PointListPresenter {
     const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
 
     if (this.#pointModel.isLoading) {
-      console.log('loading')
+      // console.log('loading')
       this.#renderMessage(EmptyListMessage.LOADING);
       this.newPointPresenter.setDisabled();
       return;
@@ -84,7 +84,7 @@ export default class PointListPresenter {
       this.newPointPresenter.setDisabled();
       return;
     }
-    
+
     if (list.length === 0) {
       this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
       return;
@@ -102,8 +102,8 @@ export default class PointListPresenter {
   };
 
   #clearMessage = () => {
-    remove(this.#message)
-  }
+    remove(this.#message);
+  };
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {

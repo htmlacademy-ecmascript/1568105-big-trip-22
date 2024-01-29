@@ -57,6 +57,9 @@ const EmptyListMessage = {
   FAILD: 'Failed to load latest route information'
 };
 
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+const AUTHORIZATION = 'Basic w4323234124428hS23';
+
 export {
   DATE_FORMAT,
   Mode,
@@ -66,5 +69,7 @@ export {
   EndPoints,
   Method,
   TimeLimit,
-  EmptyListMessage
+  EmptyListMessage,
+  END_POINT,
+  AUTHORIZATION
 };
