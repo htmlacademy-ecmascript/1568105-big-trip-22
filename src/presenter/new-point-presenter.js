@@ -59,4 +59,10 @@ export default class NewPointPresenter {
       point,
     );
   };
+
+  setDisabled(){
+    this.addNewPointButton.updateElement({
+      addingMode: true
+    })
+  }
 }

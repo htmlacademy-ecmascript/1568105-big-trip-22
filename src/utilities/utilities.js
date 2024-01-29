@@ -1,5 +1,11 @@
 import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DATE_FORMAT } from './constants.js';
+import { FilterType } from './constants.js';
+
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 const humanizeDate = (date, format) => date ? dayjs(date).format(format) : '';
 const humanizeDuration = (value) => value.format(DATE_FORMAT.minsDuration);
@@ -28,4 +34,19 @@ const getDuration = (from, to) => {
   }
 };
 
-export { humanizeDate, humanizeDuration, getDuration };
+const isPointFuture = (date) => date && dayjs(date).isAfter(dayjs().format());
+
+const isPointPast = (date) => date && dayjs(date).isBefore(dayjs().format());
+
+const isPointPastAndFuture = (dateFrom, dateTo) => dayjs(dateFrom).isSameOrBefore(dayjs().format()) && dayjs(dateTo).isSameOrAfter(dayjs().format());
+
+
+const filter = {
+  [FilterType.EVERYTHING]: (points) => points,
+  [FilterType.FUTURE]: (points) => points.filter((point) => isPointFuture(point.dateFrom)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => isPointPastAndFuture(point.dateFrom, point.dateTo)),
+  [FilterType.PAST]: (points) => points.filter((point) => isPointPast(point.dateTo)),
+};
+
+
+export { humanizeDate, humanizeDuration, getDuration, filter };

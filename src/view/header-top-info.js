@@ -36,7 +36,7 @@ function headerInfoTemplate({model}) {
   }
 
   return (
-    `<section class="trip-main__trip-info  trip-info">
+    `${!model.isLoadingError && `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${model.getPoint().length ? compileRouteInfo() : 'Design your jorney. Make first point!'}</h1>
 
@@ -46,7 +46,7 @@ function headerInfoTemplate({model}) {
       <p class="trip-info__cost">
         Total: &euro;&nbsp;<span class="trip-info__cost-value">${model.getPoint().length ? getRouteSum() : '0'}</span>
       </p>
-    </section>`
+    </section>`}`
   );
 }
 

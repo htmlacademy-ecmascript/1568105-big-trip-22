@@ -52,7 +52,9 @@ const EmptyListMessage = {
   EVERYTHING: 'Click New Event to create your first point',
   PAST: 'There are no past events now',
   PRESENT: 'There are no present events now',
-  FUTURE: 'There are no future events now'
+  FUTURE: 'There are no future events now',
+  LOADING: 'Loading...',
+  FAILD: 'Failed to load latest route information'
 };
 
 export {
