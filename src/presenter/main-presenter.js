@@ -57,7 +57,7 @@ export default class MainPresenter {
   }
 
   #renderSortComponent() {
-    if (!this.pointModel.isLoadingError) {
+    if (!this.pointModel.isLoadingError && !this.pointModel.isLoading) {
       render(this.mainSortListComponent, this.mainContainer);
     }
   }

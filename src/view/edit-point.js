@@ -87,17 +87,19 @@ const pointEditTemplate = ({state, model}) =>
               </div>`).join('') : ''}
           </div>
         </section>
-
-        <section class="event__section  event__section--destination">
+        ${state.point.destination ? 
+        `<section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${state.point.destination ? model.getDestinationById(state.point.destination).description : ''}</p>
-          <div class="event__photos-container">
+          ${model.getDestinationById(state.point.destination)?.pictures.length ? 
+          `<div class="event__photos-container">
           <div class="event__photos-tape">
-            ${state.point.destination ? model.getDestinationById(state.point.destination)?.pictures.map((item) => `
-              <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('') : ''}
+            ${model.getDestinationById(state.point.destination)?.pictures.map((item) => `
+              <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('')}
           </div>
-        </div>
-        </section>
+        </div>`
+        : ''}
+        </section>` : ''}
       </section>
     </form>
   </li>`;

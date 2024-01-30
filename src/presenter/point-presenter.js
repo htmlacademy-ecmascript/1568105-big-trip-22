@@ -15,12 +15,13 @@ export default class PointPresenter {
   #setFavorite = null;
   #onDataChange = null;
 
-  constructor ({container, pointModel, changeModeToEdit, setFavorite, onDataChange}) {
+  constructor ({container, pointModel, changeModeToEdit, setFavorite, onDataChange, startMode}) {
     this.#container = container;
     this.#pointModel = pointModel;
     this.#changeModeToEdit = changeModeToEdit;
     this.#setFavorite = setFavorite;
     this.#onDataChange = onDataChange;
+    
   }
 
   init(onePointData) {

@@ -36,7 +36,7 @@ function headerInfoTemplate({model}) {
   }
 
   return (
-    `${!model.isLoadingError && `<section class="trip-main__trip-info  trip-info">
+    `${!model.isLoadingError && !model.isLoading && `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${model.getPoint().length ? compileRouteInfo() : 'Design your jorney. Make first point!'}</h1>
 

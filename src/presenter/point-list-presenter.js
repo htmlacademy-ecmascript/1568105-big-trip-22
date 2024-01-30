@@ -31,11 +31,14 @@ export default class PointListPresenter {
     this.#filterModel = filterModel;
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
-      onDataAdd: this.#handleAnyViewAction
+      onDataAdd: this.#handleAnyViewAction,
+      openForm: this.#createNewPoint
     });
 
     this.newPointPresenter.init();
   }
+
+
 
   init({ sort }) {
     this.#sort = sort;
@@ -70,10 +73,10 @@ export default class PointListPresenter {
     this.#clearPoints();
     this.#clearMessage();
 
-    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
+
 
     if (this.#pointModel.isLoading) {
-      // console.log('loading')
+      console.log('loading')
       this.#renderMessage(EmptyListMessage.LOADING);
       this.newPointPresenter.setDisabled();
       return;
@@ -84,7 +87,8 @@ export default class PointListPresenter {
       this.newPointPresenter.setDisabled();
       return;
     }
-
+    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
+    this.newPointPresenter.setEnabled();
     if (list.length === 0) {
       this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
       return;
@@ -102,8 +106,8 @@ export default class PointListPresenter {
   };
 
   #clearMessage = () => {
-    remove(this.#message);
-  };
+    remove(this.#message)
+  }
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {
@@ -117,11 +121,16 @@ export default class PointListPresenter {
       pointModel: this.#pointModel,
       changeModeToEdit: this.#changeModeHandler,
       setFavorite: this.#setFavorite,
-      onDataChange: this.#handleAnyViewAction
+      onDataChange: this.#handleAnyViewAction,
+
     });
 
     this.#pointPresentersList.set(pointData.id, pointPresenterComponent);
     pointPresenterComponent.init(pointData);
+  }
+
+  #createNewPoint = () => {
+    this.#changeModeHandler()
   }
 
   #setFavorite = (point) => {
@@ -136,6 +145,7 @@ export default class PointListPresenter {
   };
 
   #changeModeHandler = () => {
+    //  this.newPointPresenter.closeForm();
     this.#pointPresentersList.forEach((presenter) => {
       presenter.resetView();
     });

@@ -4,8 +4,9 @@ import HeaderTopInfoPresenter from './presenter/header-top-info-presenter.js';
 import HeaderFilterPresenter from './presenter/header-filter-presenter.js';
 import MainPresenter from './presenter/main-presenter.js';
 import PointApiService from './service/point-api-service.js';
-import { END_POINT, AUTHORIZATION } from './utilities/constants.js';
 
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+const AUTHORIZATION = 'Basic w43232344428hS23';
 const pointApiService = new PointApiService(END_POINT, AUTHORIZATION);
 
 const headerTripMainElement = document.querySelector('.trip-main');
@@ -20,6 +21,7 @@ const filterModel = new FilterModel();
 const headerTopInfoPresenter = new HeaderTopInfoPresenter({headerTripMainElement});
 const headerFilterPresenter = new HeaderFilterPresenter({headerTripMainFiltersElement, filterModel, pointModel});
 const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel});
+mainPresenter.init();
 
 pointModel.init()
   .then(() => {
@@ -28,9 +30,10 @@ pointModel.init()
       headerTopInfoPresenter.init({ pointModel });
     });
   })
-
-  .finally(() => {
+  
+  .finally(()=>{
     headerFilterPresenter.init();
+    
+    
 
-    mainPresenter.init();
-  });
+  })
