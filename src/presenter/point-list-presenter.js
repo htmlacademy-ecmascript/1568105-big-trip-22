@@ -126,7 +126,10 @@ export default class PointListPresenter {
   }
 
   #createNewPoint = () => {
-    this.#changeModeHandler();
+    remove(this.#message);
+    this.#pointPresentersList.forEach((presenter) => {
+      presenter.resetView();
+    });
   };
 
   #setFavorite = (point) => {
@@ -141,7 +144,7 @@ export default class PointListPresenter {
   };
 
   #changeModeHandler = () => {
-    //  this.newPointPresenter.closeForm();
+    this.newPointPresenter.closeForm();
     this.#pointPresentersList.forEach((presenter) => {
       presenter.resetView();
     });

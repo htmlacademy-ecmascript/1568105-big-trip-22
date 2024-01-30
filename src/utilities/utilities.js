@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import { DATE_FORMAT } from './constants.js';
-import { FilterType } from './constants.js';
+import { DATE_FORMAT, FilterType } from './constants.js';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
