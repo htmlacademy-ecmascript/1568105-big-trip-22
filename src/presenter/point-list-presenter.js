@@ -38,8 +38,6 @@ export default class PointListPresenter {
     this.newPointPresenter.init();
   }
 
-
-
   init({ sort }) {
     this.#sort = sort;
     this.renderPointsList();
@@ -73,10 +71,8 @@ export default class PointListPresenter {
     this.#clearPoints();
     this.#clearMessage();
 
-
-
     if (this.#pointModel.isLoading) {
-      console.log('loading')
+      // console.log('loading');
       this.#renderMessage(EmptyListMessage.LOADING);
       this.newPointPresenter.setDisabled();
       return;
@@ -106,8 +102,8 @@ export default class PointListPresenter {
   };
 
   #clearMessage = () => {
-    remove(this.#message)
-  }
+    remove(this.#message);
+  };
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {
@@ -130,8 +126,8 @@ export default class PointListPresenter {
   }
 
   #createNewPoint = () => {
-    this.#changeModeHandler()
-  }
+    this.#changeModeHandler();
+  };
 
   #setFavorite = (point) => {
     this.#handleAnyViewAction(
