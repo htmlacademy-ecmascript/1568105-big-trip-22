@@ -17,10 +17,12 @@ export default class NewPointPresenter {
   #newPointComponent = null;
   #pointModel = null;
   #onDataAdd = null;
+  #openForm = null;
 
-  constructor({ pointModel, onDataAdd }) {
+  constructor({ pointModel, onDataAdd, openForm }) {
     this.#pointModel = pointModel;
     this.#onDataAdd = onDataAdd;
+    this.#openForm = openForm;
 
     this.addNewPointButton = new AddNewPointButton({
       onClick: () => {
@@ -39,13 +41,14 @@ export default class NewPointPresenter {
       point: newPointSkeleton,
       model: this.#pointModel,
       onSubmit: this.#addPointHandler,
-      onDelete: this.#onCancelHandler
+      onDelete: this.closeForm
     });
 
     render(this.#newPointComponent, document.querySelector('.trip-events__list'),'afterbegin');
+    this.#openForm();
   }
 
-  #onCancelHandler = () => {
+  closeForm = () => {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
   };
@@ -59,4 +62,16 @@ export default class NewPointPresenter {
       point,
     );
   };
+
+  setDisabled(){
+    this.addNewPointButton.updateElement({
+      addingMode: true
+    })
+  }
+
+  setEnabled(){
+    this.addNewPointButton.updateElement({
+      addingMode: false
+    })
+  }
 }

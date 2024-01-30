@@ -1,6 +1,12 @@
-import { render } from '../framework/render.js';
+import { render, remove } from '../framework/render.js';
 import PointPresenter from './point-presenter.js';
-import { UserAction, UpdateType, FilterType, TimeLimit } from '../utilities/constants.js';
+import {
+  UserAction,
+  UpdateType,
+  FilterType,
+  TimeLimit,
+  EmptyListMessage
+} from '../utilities/constants.js';
 import NewPointPresenter from './new-point-presenter.js';
 import UIBlocker from '../framework/ui-blocker/ui-blocker.js';
 import ListEmpty from '../view/list-empty.js';
@@ -8,10 +14,9 @@ import ListEmpty from '../view/list-empty.js';
 export default class PointListPresenter {
   #pointModel = null;
   #sort = 'DEFAULT';
-  #filter = null;
   #container = null;
-  #data = null;
   #filterModel = null;
+  #message = null;
 
   #pointPresentersList = new Map();
 
@@ -26,7 +31,8 @@ export default class PointListPresenter {
     this.#filterModel = filterModel;
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
-      onDataAdd: this.#handleAnyViewAction
+      onDataAdd: this.#handleAnyViewAction,
+      openForm: this.#createNewPoint
     });
 
     this.newPointPresenter.init();
@@ -63,22 +69,40 @@ export default class PointListPresenter {
 
   renderPointsList() {
     this.#clearPoints();
+    this.#clearMessage();
 
-    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
-
-    if (list.length > 0) {
-      list.forEach((item) => {
-        this.#renderPoint(item);
-      });
-    } else {
-      this.#renderMessage();
+    if (this.#pointModel.isLoading) {
+      // console.log('loading');
+      this.#renderMessage(EmptyListMessage.LOADING);
+      this.newPointPresenter.setDisabled();
+      return;
     }
+
+    if (this.#pointModel.isLoadingError) {
+      this.#renderMessage(EmptyListMessage.FAILD);
+      this.newPointPresenter.setDisabled();
+      return;
+    }
+    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
+    this.newPointPresenter.setEnabled();
+    if (list.length === 0) {
+      this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
+      return;
+    }
+
+    list.forEach((item) => {
+      this.#renderPoint(item);
+    });
+
   }
 
-  #renderMessage = () => {
-    const message = new ListEmpty({ filter: this.#filterModel.filter });
+  #renderMessage = (message) => {
+    this.#message = new ListEmpty(message);
+    render(this.#message, document.querySelector('.trip-events'));
+  };
 
-    render(message, document.querySelector('.trip-events'));
+  #clearMessage = () => {
+    remove(this.#message);
   };
 
   #clearPoints = () => {
@@ -93,12 +117,20 @@ export default class PointListPresenter {
       pointModel: this.#pointModel,
       changeModeToEdit: this.#changeModeHandler,
       setFavorite: this.#setFavorite,
-      onDataChange: this.#handleAnyViewAction
+      onDataChange: this.#handleAnyViewAction,
+
     });
 
     this.#pointPresentersList.set(pointData.id, pointPresenterComponent);
     pointPresenterComponent.init(pointData);
   }
+
+  #createNewPoint = () => {
+    remove(this.#message);
+    this.#pointPresentersList.forEach((presenter) => {
+      presenter.resetView();
+    });
+  };
 
   #setFavorite = (point) => {
     this.#handleAnyViewAction(
@@ -112,6 +144,7 @@ export default class PointListPresenter {
   };
 
   #changeModeHandler = () => {
+    this.newPointPresenter.closeForm();
     this.#pointPresentersList.forEach((presenter) => {
       presenter.resetView();
     });
@@ -150,7 +183,7 @@ export default class PointListPresenter {
     this.#uiBlocker.unblock();
   };
 
-  updatePoint(point){
+  updatePoint(point) {
     this.#pointPresentersList.get(point.id)?.init(point);
   }
 }

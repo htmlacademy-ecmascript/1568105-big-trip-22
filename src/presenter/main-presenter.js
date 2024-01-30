@@ -57,18 +57,20 @@ export default class MainPresenter {
   }
 
   #renderSortComponent() {
-    render(this.mainSortListComponent, this.mainContainer);
+    if (!this.pointModel.isLoadingError && !this.pointModel.isLoading) {
+      render(this.mainSortListComponent, this.mainContainer);
+    }
   }
 
   #renderPointListComponent() {
     render(this.pointListComponent, this.mainContainer);
+
   }
 
   #renderListPoints() {
     this.#pointListPresenter.init({
       pointModel: this.pointModel,
-      sort: 'DEFAULT',
-      filter: 'default'
+      sort: 'DEFAULT'
     });
   }
 
@@ -76,7 +78,7 @@ export default class MainPresenter {
     this.#pointListPresenter.init({
       pointModel: this.pointModel,
       sort: sortingType,
-      filter: 'default'
+      
     });
   };
 }

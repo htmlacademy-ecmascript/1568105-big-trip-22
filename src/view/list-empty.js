@@ -9,12 +9,12 @@ const listEmptyTemplate = (message) => (`
 export default class ListEmpty extends AbstractView {
   #filter = '';
 
-  constructor({filter}) {
+  constructor(filter) {
     super();
     this.#filter = filter;
   }
 
   get template() {
-    return listEmptyTemplate(EmptyListMessage[this.#filter.toUpperCase()]);
+    return listEmptyTemplate(this.#filter);
   }
 }

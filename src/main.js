@@ -17,18 +17,23 @@ const pointModel = new PointModel({
   service: pointApiService
 });
 
+const filterModel = new FilterModel();
+const headerTopInfoPresenter = new HeaderTopInfoPresenter({headerTripMainElement});
+const headerFilterPresenter = new HeaderFilterPresenter({headerTripMainFiltersElement, filterModel, pointModel});
+const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel});
+mainPresenter.init();
+
 pointModel.init()
   .then(() => {
-    const filterModel = new FilterModel();
-    const headerTopInfoPresenter = new HeaderTopInfoPresenter({headerTripMainElement});
-    const headerFilterPresenter = new HeaderFilterPresenter({headerTripMainFiltersElement, filterModel});
-    const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel});
-
     headerTopInfoPresenter.init({ pointModel });
-    headerFilterPresenter.init();
-    mainPresenter.init();
-
     pointModel.addObserver(() => {
       headerTopInfoPresenter.init({ pointModel });
     });
+  })
+  
+  .finally(()=>{
+    headerFilterPresenter.init();
+    
+    
+
   })
