@@ -21,7 +21,7 @@ export default class PointModel extends Observable {
       this.#destinations = await this.pointApiService.destinations;
 
       this.#isLoading = false;
-    } catch (err) { 
+    } catch (err) {
       this.#points = [];
       this.#offers = [];
       this.#destinations = [];

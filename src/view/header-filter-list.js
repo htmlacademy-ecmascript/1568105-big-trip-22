@@ -37,8 +37,6 @@ export default class HeaderFilterList extends AbstractView {
     this.#onFilterChange = onFilterChange;
     this.#filters = filters;
 
-
-    console.log('asdasdasd')
     this.element.addEventListener('change', this.filterChangeHandler);
   }
 

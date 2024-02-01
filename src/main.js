@@ -1,3 +1,4 @@
+import { END_POINT, AUTHORIZATION } from './utilities/constants.js';
 import PointModel from './model/point-model.js';
 import FilterModel from './model/filter-model.js';
 import HeaderTopInfoPresenter from './presenter/header-top-info-presenter.js';
@@ -5,8 +6,6 @@ import HeaderFilterPresenter from './presenter/header-filter-presenter.js';
 import MainPresenter from './presenter/main-presenter.js';
 import PointApiService from './service/point-api-service.js';
 
-const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
-const AUTHORIZATION = 'Basic w43232344428hS23';
 const pointApiService = new PointApiService(END_POINT, AUTHORIZATION);
 
 const headerTripMainElement = document.querySelector('.trip-main');
@@ -30,10 +29,7 @@ pointModel.init()
       headerTopInfoPresenter.init({ pointModel });
     });
   })
-  
   .finally(()=>{
     headerFilterPresenter.init();
-    
-    
 
   })

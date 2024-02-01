@@ -1,5 +1,6 @@
-import { render, remove } from '../framework/render.js';
+import { RenderPosition, render, remove } from '../framework/render.js';
 import PointPresenter from './point-presenter.js';
+import MainSortList from '../view/main-sort-list.js';
 import {
   UserAction,
   UpdateType,
@@ -25,18 +26,36 @@ export default class PointListPresenter {
     upperLimit: TimeLimit.UPPER_LIMIT,
   });
 
-  constructor({ container, pointModel, filterModel }) {
+  constructor({ container, pointModel, filterModel, mainContainer }) {
     this.#container = container;
     this.#pointModel = pointModel;
     this.#filterModel = filterModel;
+    this.mainContainer = mainContainer;
+
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
       onDataAdd: this.#handleAnyViewAction,
       openForm: this.#createNewPoint
     });
 
+    this.mainSortListComponent = new MainSortList({
+      onSort: this.#sortingHandler
+    });
+
     this.newPointPresenter.init();
+    this.#filterModel.addObserver(() => {
+      this.init({ sort: 'DEFAULT' });
+      this.mainSortListComponent.updateElement({
+        sort: 'DEFAULT'
+      })
+    });
   }
+
+  #sortingHandler = (sortingType) => {
+    this.init({
+      sort: sortingType,
+    });
+  };
 
   init({ sort }) {
     this.#sort = sort;
@@ -72,7 +91,6 @@ export default class PointListPresenter {
     this.#clearMessage();
 
     if (this.#pointModel.isLoading) {
-      // console.log('loading');
       this.#renderMessage(EmptyListMessage.LOADING);
       this.newPointPresenter.setDisabled();
       return;
@@ -85,6 +103,7 @@ export default class PointListPresenter {
     }
     const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
     this.newPointPresenter.setEnabled();
+    this.#renderSortComponent();
     if (list.length === 0) {
       this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
       return;
@@ -93,7 +112,10 @@ export default class PointListPresenter {
     list.forEach((item) => {
       this.#renderPoint(item);
     });
+  }
 
+  #renderSortComponent() {
+    render(this.mainSortListComponent, this.mainContainer, RenderPosition.AFTERBEGIN);
   }
 
   #renderMessage = (message) => {
@@ -102,8 +124,8 @@ export default class PointListPresenter {
   };
 
   #clearMessage = () => {
-    remove(this.#message);
-  };
+    remove(this.#message)
+  }
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {
@@ -118,7 +140,6 @@ export default class PointListPresenter {
       changeModeToEdit: this.#changeModeHandler,
       setFavorite: this.#setFavorite,
       onDataChange: this.#handleAnyViewAction,
-
     });
 
     this.#pointPresentersList.set(pointData.id, pointPresenterComponent);
@@ -130,7 +151,7 @@ export default class PointListPresenter {
     this.#pointPresentersList.forEach((presenter) => {
       presenter.resetView();
     });
-  };
+  }
 
   #setFavorite = (point) => {
     this.#handleAnyViewAction(
@@ -163,9 +184,10 @@ export default class PointListPresenter {
         }
         break;
       case UserAction.ADD_POINT:
-        this.#pointPresentersList.get(point.id).setSaving();
+        this.newPointPresenter.setSaving();
         try {
           await this.#pointModel.addPoint(updateType, point);
+          this.newPointPresenter.reset();
         } catch (error) {
 
         }

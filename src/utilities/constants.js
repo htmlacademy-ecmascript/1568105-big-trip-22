@@ -57,6 +57,42 @@ const EmptyListMessage = {
   FAILD: 'Failed to load latest route information'
 };
 
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+const AUTHORIZATION = 'Basic w43232344428hS23';
+
+const SortingList = [
+  {
+    ID: 'day',
+    TEXT: 'Day',
+    DISABLED: false,
+    DATA_SORT: 'DEFAULT'
+  },
+  {
+    ID: 'event',
+    TEXT: 'Event',
+    DISABLED: true,
+    DATA_SORT: ''
+  },
+  {
+    ID: 'time',
+    TEXT: 'Time',
+    DISABLED: false,
+    DATA_SORT: 'TIME'
+  },
+  {
+    ID: 'price',
+    TEXT: 'Price',
+    DISABLED: false,
+    DATA_SORT: 'PRICE'
+  },
+  {
+    ID: 'offer',
+    TEXT: 'Offers',
+    DISABLED: true,
+    DATA_SORT: ''
+  },
+]
+
 export {
   DATE_FORMAT,
   Mode,
@@ -66,5 +102,8 @@ export {
   EndPoints,
   Method,
   TimeLimit,
-  EmptyListMessage
+  EmptyListMessage,
+  SortingList,
+  END_POINT,
+  AUTHORIZATION
 };

@@ -1,5 +1,5 @@
 import { render } from '../framework/render.js';
-import MainSortList from '../view/main-sort-list.js';
+// import MainSortList from '../view/main-sort-list.js';
 import PointList from '../view/point-list.js';
 import PointListPresenter from './point-list-presenter.js';
 import { UpdateType } from '../utilities/constants.js';
@@ -13,14 +13,12 @@ export default class MainPresenter {
     this.mainContainer = mainContainer;
     this.pointModel = pointModel;
     this.filterModel = filterModel;
-    this.mainSortListComponent = new MainSortList({
-      onSort: this.#sortingHandler
-    });
 
     this.#pointListPresenter = new PointListPresenter({
       container: this.pointListComponent,
       pointModel: this.pointModel,
-      filterModel: this.filterModel
+      filterModel: this.filterModel,
+      mainContainer: this.mainContainer
     });
     this.pointModel.addObserver(this.#handleModelEvent);
     this.filterModel.addObserver(this.#handleModelEvent);
@@ -51,15 +49,8 @@ export default class MainPresenter {
   }
 
   #renderMain() {
-    this.#renderSortComponent();
     this.#renderPointListComponent();
     this.#renderListPoints();
-  }
-
-  #renderSortComponent() {
-    if (!this.pointModel.isLoadingError && !this.pointModel.isLoading) {
-      render(this.mainSortListComponent, this.mainContainer);
-    }
   }
 
   #renderPointListComponent() {
@@ -69,16 +60,7 @@ export default class MainPresenter {
 
   #renderListPoints() {
     this.#pointListPresenter.init({
-      pointModel: this.pointModel,
       sort: 'DEFAULT'
     });
   }
-
-  #sortingHandler = (sortingType) => {
-    this.#pointListPresenter.init({
-      pointModel: this.pointModel,
-      sort: sortingType,
-      
-    });
-  };
 }

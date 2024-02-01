@@ -41,21 +41,32 @@ export default class NewPointPresenter {
       point: newPointSkeleton,
       model: this.#pointModel,
       onSubmit: this.#addPointHandler,
-      onDelete: this.closeForm
+      onDelete: this.closeForm,
+      onRollUpClick: () => {
+        this.closeForm();
+      }
     });
 
-    render(this.#newPointComponent, document.querySelector('.trip-events__list'),'afterbegin');
+    render(this.#newPointComponent, document.querySelector('.trip-events__list'), 'afterbegin');
     this.#openForm();
+    document.addEventListener('keydown', this.#escKeyDownHandler);
   }
+
+  #escKeyDownHandler = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      this.closeForm();
+    }
+  };
 
   closeForm = () => {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #addPointHandler = (point) => {
-    remove(this.#newPointComponent);
-    this.addNewPointButton.reset();
+
     this.#onDataAdd(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
@@ -63,15 +74,27 @@ export default class NewPointPresenter {
     );
   };
 
-  setDisabled(){
+  reset() {
+    remove(this.#newPointComponent);
+    this.addNewPointButton.reset();
+  }
+
+  setDisabled() {
     this.addNewPointButton.updateElement({
       addingMode: true
     })
   }
 
-  setEnabled(){
+  setEnabled() {
     this.addNewPointButton.updateElement({
       addingMode: false
     })
   }
+
+  setSaving = () => {
+    this.#newPointComponent.updateElement({
+      isSaving: true,
+      isDisabled: true
+    });
+  };
 }

@@ -39,7 +39,7 @@ export default class AddNewPointButtonView extends AbstractStatefulView {
 
   reset = () => {
     this.updateElement({
-      addingMode: !this._state.addingMode
+      addingMode: false
     });
   };
 }

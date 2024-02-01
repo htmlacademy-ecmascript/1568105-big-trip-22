@@ -24,7 +24,6 @@ export default class HeaderFilterPresenter {
 
   init() {
     const prevFilterComponent = this.#headerFilterListComponent;
-    console.log(this.filters)
     this.#headerFilterListComponent = new HeaderFilterList({
       filters: this.filters,
       currentFilter: this.filterModel.filter,
