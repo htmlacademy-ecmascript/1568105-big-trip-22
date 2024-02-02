@@ -9,16 +9,18 @@ export default class MainPresenter {
 
   #pointListPresenter = null;
 
-  constructor({ mainContainer, pointModel, filterModel }) {
+  constructor({ mainContainer, pointModel, filterModel, headerTopInfoPresenter }) {
     this.mainContainer = mainContainer;
     this.pointModel = pointModel;
     this.filterModel = filterModel;
+    this.headerTopInfoPresenter = headerTopInfoPresenter;
 
     this.#pointListPresenter = new PointListPresenter({
       container: this.pointListComponent,
       pointModel: this.pointModel,
       filterModel: this.filterModel,
-      mainContainer: this.mainContainer
+      mainContainer: this.mainContainer,
+      headerTopInfoPresenter: this.headerTopInfoPresenter
     });
     this.pointModel.addObserver(this.#handleModelEvent);
     this.filterModel.addObserver(this.#handleModelEvent);

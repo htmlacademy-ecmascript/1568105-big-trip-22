@@ -32,7 +32,7 @@ export default class PointApiService extends ApiService {
 
   async addPoint(point) {
     const response = await this._load({
-      url: `${EndPoints.POINTS}`,
+      url: EndPoints.POINTS,
       method: Method.POST,
       body: JSON.stringify(this.#adaptToServer(point)),
       headers: new Headers({ 'Content-Type': 'application/json' }),

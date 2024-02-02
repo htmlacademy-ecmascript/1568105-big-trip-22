@@ -1,10 +1,10 @@
-import { END_POINT, AUTHORIZATION } from './utilities/constants.js';
 import PointModel from './model/point-model.js';
 import FilterModel from './model/filter-model.js';
 import HeaderTopInfoPresenter from './presenter/header-top-info-presenter.js';
 import HeaderFilterPresenter from './presenter/header-filter-presenter.js';
 import MainPresenter from './presenter/main-presenter.js';
 import PointApiService from './service/point-api-service.js';
+import { END_POINT, AUTHORIZATION } from './utilities/constants.js';
 
 const pointApiService = new PointApiService(END_POINT, AUTHORIZATION);
 
@@ -19,15 +19,15 @@ const pointModel = new PointModel({
 const filterModel = new FilterModel();
 const headerTopInfoPresenter = new HeaderTopInfoPresenter({headerTripMainElement});
 const headerFilterPresenter = new HeaderFilterPresenter({headerTripMainFiltersElement, filterModel, pointModel});
-const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel});
+const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel, headerTopInfoPresenter});
 mainPresenter.init();
 
 pointModel.init()
   .then(() => {
-    headerTopInfoPresenter.init({ pointModel });
-    pointModel.addObserver(() => {
-      headerTopInfoPresenter.init({ pointModel });
-    });
+    // headerTopInfoPresenter.init({ pointModel });
+    // pointModel.addObserver(() => {
+    //   headerTopInfoPresenter.init({ pointModel });
+    // });
   })
   .finally(()=>{
     headerFilterPresenter.init();

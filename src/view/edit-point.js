@@ -4,7 +4,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { humanizeDate } from '../utilities/utilities.js';
 import { DATE_FORMAT } from '../utilities/constants.js';
 
-const pointEditTemplate = ({ state, model }) =>
+const pointEditTemplate = ({ state, model, isNewPoint }) =>
   `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">
@@ -75,14 +75,24 @@ const pointEditTemplate = ({ state, model }) =>
           class="event__save-btn  btn  btn--blue"
           type="submit" ${state.isDisabled ? 'disabled' : ''}
         >${state.isSaving ? 'saving' : 'Save'}</button>
-        <button
+        ${isNewPoint 
+          ? `
+          <button
+          class="event__reset-btn"
+          type="reset">Cancel</button>`
+          : `
+          <button
           class="event__reset-btn"
           type="reset"
           ${state.isDisabled ? 'disabled' : ''}
         >${state.isDeleting ? 'Deleting' : 'Delete'}</button>
+        `}
+        ${!isNewPoint 
+          ?`
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
-        </button>
+        </button>`
+        : ''}
       </header>
       ${state.point.destination || model.getDestinationById(state.point.destination)?.pictures.length || model.getOfferByType(state.point.type).offers ?
       `<section class="event__details">
@@ -105,6 +115,7 @@ const pointEditTemplate = ({ state, model }) =>
           </div>
         </section>` : ''}
         ${state.point.destination ?
+          (model.getDestinationById(state.point.destination).description || model.getDestinationById(state.point.destination)?.pictures.length ?
         `<section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${state.point.destination ? model.getDestinationById(state.point.destination).description : ''}</p>
@@ -115,7 +126,7 @@ const pointEditTemplate = ({ state, model }) =>
                 <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('')}
             </div>
           </div>` : ''}
-        </section>` : ''}
+        </section>` : '') : ''}
       </section>` : '' }
     </form>
   </li>`;
@@ -127,14 +138,16 @@ export default class EditPoint extends AbstractStatefulView {
   #datepickerTo = null;
   #onDelete = null;
   #onRollUpClick = null;
+  #isNewPoint = false;
 
-  constructor({ point, model, onSubmit, onDelete, onRollUpClick }) {
+  constructor({ point, model, onSubmit, onDelete, onRollUpClick, isNewPoint }) {
     super();
     this.point = point;
     this.#model = model;
     this.#onSubmit = onSubmit;
     this.#onDelete = onDelete;
     this.#onRollUpClick = onRollUpClick;
+    this.#isNewPoint = isNewPoint;
 
     this._setState(EditPoint.parsePointToState(point));
     this._restoreHandlers();
@@ -158,7 +171,6 @@ export default class EditPoint extends AbstractStatefulView {
 
   _restoreHandlers() {
     this.element.querySelector('.event').addEventListener('submit', this.#submitHandler);
-    this.#setDatePicker();
     this.element.querySelector('.event__type-group').addEventListener('change', this.#chooseTypeHandler);
     if(this.element.querySelector('.event__available-offers')){
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#checkOffersHandler);
@@ -166,7 +178,25 @@ export default class EditPoint extends AbstractStatefulView {
     this.element.querySelector('.event__input--price').addEventListener('input', this.#changePriceHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#chooseDestinationHandler);
     this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteButtonHandler);
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpButtonHandler);
+
+    if(this.element.querySelector('.event__rollup-btn')){
+      this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpButtonHandler);
+    }
+    this.#setDatePicker();
+  }
+
+  removeElement() {
+    super.removeElement();
+
+    if (this.#datepickerFrom) {
+      this.#datepickerFrom.destroy();
+      this.#datepickerFrom = null;
+    }
+
+    if (this.#datepickerTo) {
+      this.#datepickerTo.destroy();
+      this.#datepickerTo = null;
+    }
   }
 
   #rollUpButtonHandler = () => {
@@ -260,7 +290,8 @@ export default class EditPoint extends AbstractStatefulView {
   get template() {
     return pointEditTemplate({
       state: this._state,
-      model: this.#model
+      model: this.#model,
+      isNewPoint: this.#isNewPoint
     });
   }
 

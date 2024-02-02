@@ -141,4 +141,14 @@ export default class PointPresenter {
       });
     }
   };
+
+  setError = () => {
+    const resetFormState = () => {
+      this.#editPointComponent.updateElement({
+        isSaving: false,
+        isDisabled: false,
+      });
+    }
+    this.#editPointComponent.shake(resetFormState);
+  }
 }

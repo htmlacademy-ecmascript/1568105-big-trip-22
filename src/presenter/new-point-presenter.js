@@ -44,7 +44,8 @@ export default class NewPointPresenter {
       onDelete: this.closeForm,
       onRollUpClick: () => {
         this.closeForm();
-      }
+      },
+      isNewPoint: true
     });
 
     render(this.#newPointComponent, document.querySelector('.trip-events__list'), 'afterbegin');
@@ -60,6 +61,7 @@ export default class NewPointPresenter {
   };
 
   closeForm = () => {
+    console.log('delet form')
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
     document.removeEventListener('keydown', this.#escKeyDownHandler);
@@ -77,6 +79,7 @@ export default class NewPointPresenter {
   reset() {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
+   
   }
 
   setDisabled() {
@@ -97,4 +100,14 @@ export default class NewPointPresenter {
       isDisabled: true
     });
   };
+
+  setError = () => {
+    const resetFormState = () => {
+      this.#newPointComponent.updateElement({
+        isSaving: false,
+        isDisabled: false,
+      });
+    }
+    this.#newPointComponent.shake(resetFormState);
+  }
 }
