@@ -74,7 +74,7 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
         <button
           class="event__save-btn  btn  btn--blue"
           type="submit" ${state.isDisabled ? 'disabled' : ''}
-        >${state.isSaving ? 'saving' : 'Save'}</button>
+        >${state.isSaving ? 'saving...' : 'Save'}</button>
         ${isNewPoint 
           ? `
           <button
@@ -85,7 +85,7 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
           class="event__reset-btn"
           type="reset"
           ${state.isDisabled ? 'disabled' : ''}
-        >${state.isDeleting ? 'Deleting' : 'Delete'}</button>
+        >${state.isDeleting ? 'deleting...' : 'Delete'}</button>
         `}
         ${!isNewPoint 
           ?`

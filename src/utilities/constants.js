@@ -58,7 +58,7 @@ const EmptyListMessage = {
 };
 
 const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
-const AUTHORIZATION = 'Basic w432327744228hS23';
+const AUTHORIZATION = 'Basic w4323234228hS23';
 
 const SortingList = [
   {

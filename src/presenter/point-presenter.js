@@ -51,11 +51,7 @@ export default class PointPresenter {
       onSubmit: this.#onDataChangeHandler,
       onDelete: this.#onDataDeleteHandler,
 
-      onRollUpClick: () => {
-        this.replaceFormToPoint();
-
-        document.removeEventListener('keydown', this.escKeyDownHandler);
-      }
+      onRollUpClick: this.rollUpClickHandler
     });
 
     if (previousPointComponent === null || previousEditComponent === null) {
@@ -76,9 +72,21 @@ export default class PointPresenter {
     remove(previousEditComponent);
   }
 
+  rollUpClickHandler = () => {
+    this.#editPointComponent.updateElement({
+      point: this.#pointData
+    })
+    this.replaceFormToPoint();
+    
+    document.removeEventListener('keydown', this.escKeyDownHandler);
+  }
+
   escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
+      this.#editPointComponent.updateElement({
+        point: this.#pointData
+      })
       this.replaceFormToPoint();
       // document.removeEventListener('keydown', this.escKeyDownHandler);
     }
@@ -98,6 +106,9 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode === Mode.EDITING) {
+      this.#editPointComponent.updateElement({
+        point: this.#pointData
+      })
       this.replaceFormToPoint();
     }
   }

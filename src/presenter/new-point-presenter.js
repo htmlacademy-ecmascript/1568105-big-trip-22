@@ -18,11 +18,13 @@ export default class NewPointPresenter {
   #pointModel = null;
   #onDataAdd = null;
   #openForm = null;
+  #cancelHandler = null;
 
-  constructor({ pointModel, onDataAdd, openForm }) {
+  constructor({ pointModel, onDataAdd, openForm, onCancel }) {
     this.#pointModel = pointModel;
     this.#onDataAdd = onDataAdd;
     this.#openForm = openForm;
+    this.#cancelHandler = onCancel;
 
     this.addNewPointButton = new AddNewPointButton({
       onClick: () => {
@@ -41,7 +43,7 @@ export default class NewPointPresenter {
       point: newPointSkeleton,
       model: this.#pointModel,
       onSubmit: this.#addPointHandler,
-      onDelete: this.closeForm,
+      onDelete: this.cancelNewPoint,
       onRollUpClick: () => {
         this.closeForm();
       },
@@ -56,7 +58,7 @@ export default class NewPointPresenter {
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      this.closeForm();
+      this.cancelNewPoint();
     }
   };
 
@@ -68,18 +70,17 @@ export default class NewPointPresenter {
   };
 
   #addPointHandler = (point) => {
-
     this.#onDataAdd(
       UserAction.ADD_POINT,
-      UpdateType.MINOR,
+      UpdateType.ADDING,
       point,
     );
   };
 
-  reset() {
+  cancelNewPoint = () => {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
-   
+    this.#cancelHandler();
   }
 
   setDisabled() {

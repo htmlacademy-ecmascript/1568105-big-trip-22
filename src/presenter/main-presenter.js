@@ -29,7 +29,8 @@ export default class MainPresenter {
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
       case UpdateType.PATCH:
-        this.#pointListPresenter.updatePoint(data);
+        // this.#pointListPresenter.updatePoint(data);
+        this.#pointListPresenter.renderPointsList();
         break;
       case UpdateType.MINOR:
         this.#pointListPresenter.renderPointsList();
@@ -40,9 +41,17 @@ export default class MainPresenter {
 
         break;
       case UpdateType.MAJOR:
+
         this.#pointListPresenter.renderPointsList();
 
         break;
+
+        case UpdateType.ADDING:
+          this.#pointListPresenter.resetFilter();
+          this.#pointListPresenter.resetSort();
+          this.#pointListPresenter.renderPointsList();
+  
+          break;
     }
   };
 

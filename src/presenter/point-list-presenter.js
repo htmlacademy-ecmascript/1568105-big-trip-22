@@ -38,7 +38,10 @@ export default class PointListPresenter {
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
       onDataAdd: this.#handleAnyViewAction,
-      openForm: this.#createNewPoint
+      openForm: this.#createNewPoint,
+      onCancel: () => {
+        this.#sortingHandler('DEFAULT')
+      }
     });
 
     // this.mainSortListComponent = new MainSortList({
@@ -60,6 +63,14 @@ export default class PointListPresenter {
     });
   };
 
+  resetSort = () => {
+    this.#sort = 'DEFAULT';
+  }
+
+  resetFilter() {
+    this.#filterModel.resetFilter();
+  }
+
   init({ sort }) {
     this.#sort = sort;
     this.renderPointsList();
@@ -74,6 +85,10 @@ export default class PointListPresenter {
       case 'TIME':
         return points.sort((b, a) => ((new Date(a.dateTo) - new Date(a.dateFrom)) - (new Date(b.dateTo) - new Date(b.dateFrom))));
     }
+  }
+
+  #sortingByDefault(points) {
+    return points.sort((a, b) => new Date(a.dateFrom) - new Date(b.dateFrom));
   }
 
   #filtering(points) {
@@ -107,7 +122,7 @@ export default class PointListPresenter {
 
     const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
     this.newPointPresenter.setEnabled();
-    this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: list })
+    this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: this.#sortingByDefault([...this.#pointModel.getPoint()]) })
     if (list.length === 0) {
       this.#sort = 'DEFAULT';
       this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
@@ -223,9 +238,12 @@ export default class PointListPresenter {
     this.#uiBlocker.unblock();
   };
 
-  updatePoint(point) {
-    this.#pointPresentersList.get(point.id)?.init(point);
-    const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
-    this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: list })
-  }
+  // updatePoint(point) {
+  //   // this.#pointPresentersList.get(point.id)?.init(point);
+  //   const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
+  //   this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: list })
+  //   list.forEach((item) => {
+  //     this.#renderPoint(item);
+  //   });
+  // }
 }
