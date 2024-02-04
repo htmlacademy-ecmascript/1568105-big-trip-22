@@ -38,8 +38,8 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
           </label>
           <input
             class="event__input  event__input--destination"
-            id="event-destination-${state.point.id || '0'}" type="text"
-            name="event-destination"
+            id="event-destination-${state.point.id || '0'}"
+            type="text" name="event-destination"
             value="${state.point.destination ? model.getDestinationById(state.point.destination).name : ''}"
             list="destination-list-1" required>
           <datalist id="destination-list-1">
@@ -76,23 +76,15 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
           type="submit" ${state.isDisabled ? 'disabled' : ''}
         >${state.isSaving ? 'Saving...' : 'Save'}</button>
         ${isNewPoint
-          ? `
-          <button
-          class="event__reset-btn"
-          type="reset">Cancel</button>`
-          : `
-          <button
-          class="event__reset-btn"
-          type="reset"
-          ${state.isDisabled ? 'disabled' : ''}
-        >${state.isDeleting ? 'Deleting...' : 'Delete'}</button>
-        `}
+          ? `<button class="event__reset-btn" type="reset">Cancel</button>`
+          : `<button class="event__reset-btn" type="reset" ${state.isDisabled ? 'disabled' : ''}>${state.isDeleting ? 'Deleting...' : 'Delete'}</button>`
+        }
         ${!isNewPoint
-          ?`
-        <button class="event__rollup-btn" type="button">
-          <span class="visually-hidden">Open event</span>
-        </button>`
-        : ''}
+          ? `<button class="event__rollup-btn" type="button">
+            <span class="visually-hidden">Open event</span>
+          </button>`
+          : ''
+        }
       </header>
       ${state.point.destination || model.getDestinationById(state.point.destination)?.pictures.length || model.getOfferByType(state.point.type).offers ?
       `<section class="event__details">
@@ -172,16 +164,19 @@ export default class EditPoint extends AbstractStatefulView {
   _restoreHandlers() {
     this.element.querySelector('.event').addEventListener('submit', this.#submitHandler);
     this.element.querySelector('.event__type-group').addEventListener('change', this.#chooseTypeHandler);
-    if(this.element.querySelector('.event__available-offers')){
+
+    if (this.element.querySelector('.event__available-offers')) {
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#checkOffersHandler);
     }
+
     this.element.querySelector('.event__input--price').addEventListener('input', this.#changePriceHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#chooseDestinationHandler);
     this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteButtonHandler);
 
-    if(this.element.querySelector('.event__rollup-btn')){
+    if (this.element.querySelector('.event__rollup-btn')) {
       this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpButtonHandler);
     }
+
     this.#setDatePicker();
   }
 

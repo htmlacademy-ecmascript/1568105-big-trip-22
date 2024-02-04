@@ -2,7 +2,6 @@ import AbstractView from '../framework/view/abstract-view.js';
 
 const listEmptyTemplate = (message) => `<p class="trip-events__msg">${message}</p>`;
 
-
 export default class ListEmpty extends AbstractView {
   #message = '';
 

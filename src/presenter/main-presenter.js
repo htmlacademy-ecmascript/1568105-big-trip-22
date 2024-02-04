@@ -1,5 +1,4 @@
 import { render } from '../framework/render.js';
-// import MainSortList from '../view/main-sort-list.js';
 import PointList from '../view/point-list.js';
 import PointListPresenter from './point-list-presenter.js';
 import { UpdateType } from '../utilities/constants.js';
@@ -29,8 +28,8 @@ export default class MainPresenter {
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
       case UpdateType.PATCH:
-        // this.#pointListPresenter.updatePoint(data);
         this.#pointListPresenter.renderPointsList();
+
         break;
       case UpdateType.MINOR:
         this.#pointListPresenter.renderPointsList();
@@ -41,17 +40,9 @@ export default class MainPresenter {
 
         break;
       case UpdateType.MAJOR:
-
         this.#pointListPresenter.renderPointsList();
 
         break;
-
-        // case UpdateType.ADDING:
-        //   this.#pointListPresenter.resetFilter();
-        //   this.#pointListPresenter.resetSort();
-        //   this.#pointListPresenter.renderPointsList();
-  
-        //   break;
     }
   };
 

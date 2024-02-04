@@ -26,37 +26,16 @@ export default class MainSortList extends AbstractStatefulView {
     super();
     this.#sortHandler = onSort;
     this.#sorting = sorting;
-
-    // this._setState(MainSortList.parseSortToState('DEFAULT'));
-    // this._restoreHandlers();
     this.element.addEventListener('change', this.#chooseSorting);
   }
-
-  // _restoreHandlers() {
-  //   this.element.addEventListener('change', this.#chooseSorting);
-  // }
-
-  // static parseSortToState = (sort) => ({ sort });
-
-  // static parseStateToSort = (state) => {
-  //   const sort = { ...state };
-  //   return sort;
-  // };
 
   #chooseSorting = (evt) => {
     if (evt.target.dataset.sort) {
       this.#sortHandler(evt.target.dataset.sort);
-      // this.updateElement({
-      //   sort: evt.target.dataset.sort
-      // })
       this.#sorting = evt.target.dataset.sort
       console.log('sorting')
     }
   };
-
-  // reset(){
-  //   this.#sorting = 'DEFAULT'
-  // }
 
   get template() {
     return mainSortListTemplate(this.#sorting);

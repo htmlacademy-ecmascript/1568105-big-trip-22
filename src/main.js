@@ -23,13 +23,6 @@ const mainPresenter = new MainPresenter({mainContainer, pointModel, filterModel,
 mainPresenter.init();
 
 pointModel.init()
-  .then(() => {
-    // headerTopInfoPresenter.init({ pointModel });
-    // pointModel.addObserver(() => {
-    //   headerTopInfoPresenter.init({ pointModel });
-    // });
-  })
-  .finally(()=>{
+  .finally(() => {
     headerFilterPresenter.init();
-
-  })
+})

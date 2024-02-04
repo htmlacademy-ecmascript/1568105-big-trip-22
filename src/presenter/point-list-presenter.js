@@ -44,10 +44,6 @@ export default class PointListPresenter {
       }
     });
 
-    // this.mainSortListComponent = new MainSortList({
-    //   onSort: this.#sortingHandler
-    // });
-
     this.newPointPresenter.init();
     this.#filterModel.addObserver(() => {
       this.init({ sort: 'DEFAULT' });
@@ -66,10 +62,6 @@ export default class PointListPresenter {
   resetSort = () => {
     this.#sort = 'DEFAULT';
   }
-
-  // resetFilter() {
-  //   this.#filterModel.resetFilter();
-  // }
 
   init({ sort }) {
     this.#sort = sort;
@@ -178,12 +170,8 @@ export default class PointListPresenter {
   }
 
   #createNewPoint = () => {
-    
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING)
     remove(this.#message);
-    // this.#pointPresentersList.forEach((presenter) => {
-    //   presenter.resetView();
-    // });
   }
 
   #setFavorite = (point) => {
@@ -239,13 +227,4 @@ export default class PointListPresenter {
     }
     this.#uiBlocker.unblock();
   };
-
-  // updatePoint(point) {
-  //   // this.#pointPresentersList.get(point.id)?.init(point);
-  //   const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
-  //   this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: list })
-  //   list.forEach((item) => {
-  //     this.#renderPoint(item);
-  //   });
-  // }
 }

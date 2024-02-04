@@ -35,10 +35,8 @@ function headerInfoTemplate({model, points}) {
     `${!model.isLoadingError && !model.isLoading && `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${points.length ? compileRouteInfo() : 'Design your jorney. Make first point!'}</h1>
-
         <p class="trip-info__dates">${points.length ? compileRouteTime() : ''}</p>
       </div>
-
       <p class="trip-info__cost">
         Total: &euro;&nbsp;<span class="trip-info__cost-value">${points.length ? getRouteSum() : '0'}</span>
       </p>

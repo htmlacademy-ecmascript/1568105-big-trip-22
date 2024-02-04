@@ -15,6 +15,5 @@ export default class FilterModel extends Observable {
 
   resetFilter = () => {
     this.#filter = FilterType.EVERYTHING;
-    // this._notify(updateType, filter);
   }
 }

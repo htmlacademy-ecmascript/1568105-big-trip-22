@@ -11,7 +11,7 @@ const MUTUAL_CONFIG = {
   dateFormat: DATE_FORMAT.datePicker,
   enableTime: true,
   'time_24hr': true,
-  locale: {firstDayOfWeek: 1},
+  locale: { firstDayOfWeek: 1 },
 };
 
 const Mode = {

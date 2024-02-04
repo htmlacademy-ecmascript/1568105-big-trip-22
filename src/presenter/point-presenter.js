@@ -21,7 +21,6 @@ export default class PointPresenter {
     this.#changeModeToEdit = changeModeToEdit;
     this.#setFavorite = setFavorite;
     this.#onDataChange = onDataChange;
-
   }
 
   init(onePointData) {
@@ -50,7 +49,6 @@ export default class PointPresenter {
       model: this.#pointModel,
       onSubmit: this.#onDataChangeHandler,
       onDelete: this.#onDataDeleteHandler,
-
       onRollUpClick: this.rollUpClickHandler
     });
 
@@ -77,7 +75,6 @@ export default class PointPresenter {
       point: this.#pointData
     })
     this.replaceFormToPoint();
-    
     document.removeEventListener('keydown', this.escKeyDownHandler);
   }
 
@@ -88,7 +85,6 @@ export default class PointPresenter {
         point: this.#pointData
       })
       this.replaceFormToPoint();
-      // document.removeEventListener('keydown', this.escKeyDownHandler);
     }
   };
 
