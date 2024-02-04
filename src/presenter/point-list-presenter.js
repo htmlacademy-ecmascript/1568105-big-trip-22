@@ -205,14 +205,11 @@ export default class PointListPresenter {
         }
         break;
       case UserAction.ADD_POINT:
-        console.log('add point')
         this.newPointPresenter.setSaving();
         try {
           await this.#pointModel.addPoint(updateType, point);
-          console.log('add point2')
           this.newPointPresenter.closeForm();
         } catch (error) {
-          console.log(error)
           this.newPointPresenter.setError()
         }
         break;

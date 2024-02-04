@@ -33,7 +33,6 @@ export default class MainSortList extends AbstractStatefulView {
     if (evt.target.dataset.sort) {
       this.#sortHandler(evt.target.dataset.sort);
       this.#sorting = evt.target.dataset.sort
-      console.log('sorting')
     }
   };
 

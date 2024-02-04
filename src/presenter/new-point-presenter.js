@@ -63,7 +63,6 @@ export default class NewPointPresenter {
   };
 
   closeForm = () => {
-    console.log('delet form')
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
     document.removeEventListener('keydown', this.#escKeyDownHandler);

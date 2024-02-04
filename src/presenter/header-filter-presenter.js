@@ -40,7 +40,6 @@ export default class HeaderFilterPresenter {
   }
 
   #changeFilterHandle = () => {
-    console.log('asd ', this.filterModel.filter)
     this.init();
   }
 }
