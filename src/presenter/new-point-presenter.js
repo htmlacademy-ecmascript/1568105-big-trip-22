@@ -72,12 +72,18 @@ export default class NewPointPresenter {
   #addPointHandler = (point) => {
     this.#onDataAdd(
       UserAction.ADD_POINT,
-      UpdateType.ADDING,
+      UpdateType.MAJOR,
       point,
     );
   };
 
   cancelNewPoint = () => {
+    // this.#newPointComponent.updateElement({
+    //   point: {
+    //     ...newPointSkeleton,
+    //     type: ''
+    //   }
+    // })
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
     this.#cancelHandler();

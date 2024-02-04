@@ -2,7 +2,7 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { humanizeDate } from '../utilities/utilities.js';
-import { DATE_FORMAT } from '../utilities/constants.js';
+import { DATE_FORMAT, MUTUAL_CONFIG } from '../utilities/constants.js';
 
 const pointEditTemplate = ({ state, model, isNewPoint }) =>
   `<li class="trip-events__item">
@@ -74,8 +74,8 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
         <button
           class="event__save-btn  btn  btn--blue"
           type="submit" ${state.isDisabled ? 'disabled' : ''}
-        >${state.isSaving ? 'saving...' : 'Save'}</button>
-        ${isNewPoint 
+        >${state.isSaving ? 'Saving...' : 'Save'}</button>
+        ${isNewPoint
           ? `
           <button
           class="event__reset-btn"
@@ -85,9 +85,9 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
           class="event__reset-btn"
           type="reset"
           ${state.isDisabled ? 'disabled' : ''}
-        >${state.isDeleting ? 'deleting...' : 'Delete'}</button>
+        >${state.isDeleting ? 'Deleting...' : 'Delete'}</button>
         `}
-        ${!isNewPoint 
+        ${!isNewPoint
           ?`
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
@@ -250,20 +250,16 @@ export default class EditPoint extends AbstractStatefulView {
 
   #setDatePicker = () => {
     this.#datepickerFrom = flatpickr(this.element.querySelector('#event-start-time-1'), {
-      dateFormat: 'd/m/y H:i',
-      altInput: true,
-      enableTime: true,
-      altFormat: 'd/m/y H:i',
-      defaultDate: this._state.point.dateFrom ? this._state.point.dateFrom : Date.now(),
+      ...MUTUAL_CONFIG,
+      maxDate: this._state.point.dateTo,
+      defaultDate: this._state.point.dateFrom,
       onChange: this.#dateFromChangeHandler
     });
 
     this.#datepickerTo = flatpickr(this.element.querySelector('#event-end-time-1'), {
-      dateFormat: 'd/m/y H:i',
-      enableTime: true,
-      altFormat: 'd/m/y H:i',
-      altInput: true,
-      defaultDate: this._state.point.dateTo ? this._state.point.dateTo : Date.now(),
+      ...MUTUAL_CONFIG,
+      minDate: this._state.point.dateFrom,
+      defaultDate: this._state.point.dateTo,
       onChange: this.#dateToChangeHandler
     });
   };

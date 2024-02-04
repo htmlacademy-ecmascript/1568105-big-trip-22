@@ -46,12 +46,12 @@ export default class MainPresenter {
 
         break;
 
-        case UpdateType.ADDING:
-          this.#pointListPresenter.resetFilter();
-          this.#pointListPresenter.resetSort();
-          this.#pointListPresenter.renderPointsList();
+        // case UpdateType.ADDING:
+        //   this.#pointListPresenter.resetFilter();
+        //   this.#pointListPresenter.resetSort();
+        //   this.#pointListPresenter.renderPointsList();
   
-          break;
+        //   break;
     }
   };
 

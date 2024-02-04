@@ -158,8 +158,10 @@ export default class PointPresenter {
       this.#editPointComponent.updateElement({
         isSaving: false,
         isDisabled: false,
+        isDeleting: false
       });
     }
     this.#editPointComponent.shake(resetFormState);
+    document.addEventListener('keydown', this.escKeyDownHandler);
   }
 }

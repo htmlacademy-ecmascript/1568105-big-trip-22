@@ -67,9 +67,9 @@ export default class PointListPresenter {
     this.#sort = 'DEFAULT';
   }
 
-  resetFilter() {
-    this.#filterModel.resetFilter();
-  }
+  // resetFilter() {
+  //   this.#filterModel.resetFilter();
+  // }
 
   init({ sort }) {
     this.#sort = sort;
@@ -178,10 +178,12 @@ export default class PointListPresenter {
   }
 
   #createNewPoint = () => {
+    
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING)
     remove(this.#message);
-    this.#pointPresentersList.forEach((presenter) => {
-      presenter.resetView();
-    });
+    // this.#pointPresentersList.forEach((presenter) => {
+    //   presenter.resetView();
+    // });
   }
 
   #setFavorite = (point) => {

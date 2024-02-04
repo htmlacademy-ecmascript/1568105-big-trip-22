@@ -3,7 +3,15 @@ const DATE_FORMAT = {
   dayMonth: 'D MMM',
   day: 'D',
   hours: 'HH:mm',
-  date: 'DD/MM/YY HH:mm'
+  date: 'DD/MM/YY HH:mm',
+  datePicker: 'd/m/y H:i'
+};
+
+const MUTUAL_CONFIG = {
+  dateFormat: DATE_FORMAT.datePicker,
+  enableTime: true,
+  'time_24hr': true,
+  locale: {firstDayOfWeek: 1},
 };
 
 const Mode = {
@@ -21,6 +29,7 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  ADDING: 'ADDING'
 };
 
 const FilterType = {
@@ -58,7 +67,7 @@ const EmptyListMessage = {
 };
 
 const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
-const AUTHORIZATION = 'Basic w4323234228hS23';
+const AUTHORIZATION = 'Basic w432323994228hS23';
 
 const SortingList = [
   {
@@ -105,5 +114,6 @@ export {
   EmptyListMessage,
   SortingList,
   END_POINT,
-  AUTHORIZATION
+  AUTHORIZATION,
+  MUTUAL_CONFIG
 };
