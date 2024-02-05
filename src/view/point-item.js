@@ -13,9 +13,9 @@ function pointItemTemplate(point, destination, offers) {
         <h3 class="event__title">${point.type} ${destination.name}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime=${point.dateFrom}>${humanizeDate(point.dateFrom, DATE_FORMAT.date)}</time>
+            <time class="event__start-time" datetime=${point.dateFrom}>${humanizeDate(point.dateFrom, DATE_FORMAT.hours)}</time>
             &mdash;
-            <time class="event__end-time" datetime=${point.dateTo}>${humanizeDate(point.dateTo, DATE_FORMAT.date)}</time>
+            <time class="event__end-time" datetime=${point.dateTo}>${humanizeDate(point.dateTo, DATE_FORMAT.hours)}</time>
           </p>
           <p class="event__duration">${getDuration(point.dateFrom, point.dateTo)}</p>
         </div>

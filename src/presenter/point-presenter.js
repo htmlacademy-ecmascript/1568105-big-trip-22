@@ -15,13 +15,12 @@ export default class PointPresenter {
   #setFavorite = null;
   #onDataChange = null;
 
-  constructor ({container, pointModel, changeModeToEdit, setFavorite, onDataChange, startMode}) {
+  constructor({ container, pointModel, changeModeToEdit, setFavorite, onDataChange}) {
     this.#container = container;
     this.#pointModel = pointModel;
     this.#changeModeToEdit = changeModeToEdit;
     this.#setFavorite = setFavorite;
     this.#onDataChange = onDataChange;
-    
   }
 
   init(onePointData) {
@@ -49,7 +48,8 @@ export default class PointPresenter {
       point: this.#pointData,
       model: this.#pointModel,
       onSubmit: this.#onDataChangeHandler,
-      onDelete: this.#onDataDeleteHandler
+      onDelete: this.#onDataDeleteHandler,
+      onRollUpClick: this.rollUpClickHandler
     });
 
     if (previousPointComponent === null || previousEditComponent === null) {
@@ -70,11 +70,21 @@ export default class PointPresenter {
     remove(previousEditComponent);
   }
 
+  rollUpClickHandler = () => {
+    this.#editPointComponent.updateElement({
+      point: this.#pointData
+    });
+    this.replaceFormToPoint();
+    document.removeEventListener('keydown', this.escKeyDownHandler);
+  };
+
   escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
+      this.#editPointComponent.updateElement({
+        point: this.#pointData
+      });
       this.replaceFormToPoint();
-      document.removeEventListener('keydown', this.escKeyDownHandler);
     }
   };
 
@@ -87,10 +97,14 @@ export default class PointPresenter {
   replaceFormToPoint() {
     replace(this.#pointComponent, this.#editPointComponent);
     this.#mode = Mode.DEFAULT;
+    document.removeEventListener('keydown', this.escKeyDownHandler);
   }
 
   resetView() {
     if (this.#mode === Mode.EDITING) {
+      this.#editPointComponent.updateElement({
+        point: this.#pointData
+      });
       this.replaceFormToPoint();
     }
   }
@@ -103,7 +117,7 @@ export default class PointPresenter {
   #onDataChangeHandler = (point) => {
     this.#onDataChange(
       UserAction.UPDATE_POINT,
-      UpdateType.PATCH,
+      UpdateType.я,
       point
     );
     document.removeEventListener('keydown', this.escKeyDownHandler);
@@ -133,5 +147,21 @@ export default class PointPresenter {
         isDisabled: true
       });
     }
+  };
+
+  setError = () => {
+    const resetFormState = () => {
+      this.#editPointComponent.updateElement({
+        isSaving: false,
+        isDisabled: false,
+        isDeleting: false
+      });
+    };
+    this.#editPointComponent.shake(resetFormState);
+    document.addEventListener('keydown', this.escKeyDownHandler);
+  };
+
+  setFail = () => {
+    this.#pointComponent.shake();
   };
 }

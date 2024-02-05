@@ -21,7 +21,7 @@ export default class PointModel extends Observable {
       this.#destinations = await this.pointApiService.destinations;
 
       this.#isLoading = false;
-    } catch (err) { 
+    } catch (err) {
       this.#points = [];
       this.#offers = [];
       this.#destinations = [];
@@ -81,43 +81,54 @@ export default class PointModel extends Observable {
     const index = this.#points.findIndex((item) => item.id === update.id);
 
     if (index === -1) {
-      throw new Error('Can\'t update unexisting task');
+      throw new Error('Can\'t update unexisting point');
     }
-    await this.pointApiService.updatePoint(update);
-    this.#points = [
-      ...this.#points.slice(0, index),
-      update,
-      ...this.#points.slice(index + 1),
-    ];
 
-    this._notify(updateType, update);
+    try {
+      const response = await this.pointApiService.updatePoint(update);
+      const updatedPoint = this.#adaptToClient(response);
+      this.#points = [
+        ...this.#points.slice(0, index),
+        updatedPoint,
+        ...this.#points.slice(index + 1),
+      ];
+      this._notify(updateType, updatedPoint);
+    } catch (err) {
+      throw new Error('Can\'t update point');
+    }
   }
 
   async addPoint(updateType, update) {
-    await this.pointApiService.addPoint(update);
-
-    this.#points = [
-      update,
-      ...this.#points,
-    ];
-
-    this._notify(updateType, update);
+    try {
+      const response = await this.pointApiService.addPoint(update);
+      const newPoint = this.#adaptToClient(response);
+      this.#points = [
+        newPoint,
+        ...this.#points,
+      ];
+      this._notify(updateType, newPoint);
+    } catch (err) {
+      throw new Error('Can\'t add point');
+    }
   }
 
   async deletePoint(updateType, update) {
     const index = this.#points.findIndex((item) => item.id === update.id);
     if (index === -1) {
-      throw new Error('Can\'t delete unexisting task');
+      throw new Error('Can\'t delete unexisting point');
     }
+    try {
+      await this.pointApiService.deletePoint(update.id);
 
-    await this.pointApiService.deletePoint(update.id);
+      this.#points = [
+        ...this.#points.slice(0, index),
+        ...this.#points.slice(index + 1),
+      ];
 
-    this.#points = [
-      ...this.#points.slice(0, index),
-      ...this.#points.slice(index + 1),
-    ];
-
-    this._notify(updateType, update);
+      this._notify(updateType, update);
+    } catch (err) {
+      throw new Error('Can\'t delete  point');
+    }
   }
 
   #adaptToClient(point) {

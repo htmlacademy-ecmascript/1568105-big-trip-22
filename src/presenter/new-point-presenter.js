@@ -18,11 +18,13 @@ export default class NewPointPresenter {
   #pointModel = null;
   #onDataAdd = null;
   #openForm = null;
+  #cancelHandler = null;
 
-  constructor({ pointModel, onDataAdd, openForm }) {
+  constructor({ pointModel, onDataAdd, openForm, onCancel }) {
     this.#pointModel = pointModel;
     this.#onDataAdd = onDataAdd;
     this.#openForm = openForm;
+    this.#cancelHandler = onCancel;
 
     this.addNewPointButton = new AddNewPointButton({
       onClick: () => {
@@ -41,37 +43,77 @@ export default class NewPointPresenter {
       point: newPointSkeleton,
       model: this.#pointModel,
       onSubmit: this.#addPointHandler,
-      onDelete: this.closeForm
+      onDelete: this.cancelNewPoint,
+      onRollUpClick: () => {
+        this.closeForm();
+      },
+      isNewPoint: true
     });
 
-    render(this.#newPointComponent, document.querySelector('.trip-events__list'),'afterbegin');
+    render(this.#newPointComponent, document.querySelector('.trip-events__list'), 'afterbegin');
     this.#openForm();
+    document.addEventListener('keydown', this.#escKeyDownHandler);
   }
+
+  #escKeyDownHandler = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      this.cancelNewPoint();
+    }
+  };
 
   closeForm = () => {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #addPointHandler = (point) => {
-    remove(this.#newPointComponent);
-    this.addNewPointButton.reset();
     this.#onDataAdd(
       UserAction.ADD_POINT,
-      UpdateType.MINOR,
+      UpdateType.MAJOR,
       point,
     );
   };
 
-  setDisabled(){
+  cancelNewPoint = () => {
+    // this.#newPointComponent.updateElement({
+    //   point: {
+    //     ...newPointSkeleton,
+    //     type: ''
+    //   }
+    // })
+    remove(this.#newPointComponent);
+    this.addNewPointButton.reset();
+    this.#cancelHandler();
+  };
+
+  setDisabled() {
     this.addNewPointButton.updateElement({
       addingMode: true
-    })
+    });
   }
 
-  setEnabled(){
+  setEnabled() {
     this.addNewPointButton.updateElement({
       addingMode: false
-    })
+    });
   }
+
+  setSaving = () => {
+    this.#newPointComponent.updateElement({
+      isSaving: true,
+      isDisabled: true
+    });
+  };
+
+  setError = () => {
+    const resetFormState = () => {
+      this.#newPointComponent.updateElement({
+        isSaving: false,
+        isDisabled: false,
+      });
+    };
+    this.#newPointComponent.shake(resetFormState);
+  };
 }

@@ -3,7 +3,15 @@ const DATE_FORMAT = {
   dayMonth: 'D MMM',
   day: 'D',
   hours: 'HH:mm',
-  date: 'DD/MM/YY HH:mm'
+  date: 'DD/MM/YY HH:mm',
+  datePicker: 'd/m/y H:i'
+};
+
+const MUTUAL_CONFIG = {
+  dateFormat: DATE_FORMAT.datePicker,
+  enableTime: true,
+  'time_24hr': true,
+  locale: { firstDayOfWeek: 1 },
 };
 
 const Mode = {
@@ -21,6 +29,7 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  ADDING: 'ADDING'
 };
 
 const FilterType = {
@@ -57,6 +66,42 @@ const EmptyListMessage = {
   FAILD: 'Failed to load latest route information'
 };
 
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+const AUTHORIZATION = 'Basic w432323994228hS23';
+
+const SortingList = [
+  {
+    ID: 'day',
+    TEXT: 'Day',
+    DISABLED: false,
+    DATA_SORT: 'DEFAULT'
+  },
+  {
+    ID: 'event',
+    TEXT: 'Event',
+    DISABLED: true,
+    DATA_SORT: ''
+  },
+  {
+    ID: 'time',
+    TEXT: 'Time',
+    DISABLED: false,
+    DATA_SORT: 'TIME'
+  },
+  {
+    ID: 'price',
+    TEXT: 'Price',
+    DISABLED: false,
+    DATA_SORT: 'PRICE'
+  },
+  {
+    ID: 'offer',
+    TEXT: 'Offers',
+    DISABLED: true,
+    DATA_SORT: ''
+  },
+];
+
 export {
   DATE_FORMAT,
   Mode,
@@ -66,5 +111,9 @@ export {
   EndPoints,
   Method,
   TimeLimit,
-  EmptyListMessage
+  EmptyListMessage,
+  SortingList,
+  END_POINT,
+  AUTHORIZATION,
+  MUTUAL_CONFIG
 };

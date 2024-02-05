@@ -8,6 +8,7 @@ dayjs.extend(isSameOrAfter);
 
 const humanizeDate = (date, format) => date ? dayjs(date).format(format) : '';
 const humanizeDuration = (value) => value.format(DATE_FORMAT.minsDuration);
+const twoDigitNumber = (n) => n < 10 ? `0${n}` : n;
 const getDuration = (from, to) => {
   const HOURS_PER_DAY = 24;
   const MINS_PER_HOUR = 60;
@@ -25,11 +26,11 @@ const getDuration = (from, to) => {
 
   switch (true) {
     case (diffMins < MINS_PER_HOUR):
-      return `${diffMins}M`;
+      return `${twoDigitNumber(diffMins)}m`;
     case (diffMins >= MINS_PER_HOUR && diffMins < MINS_PER_DAY):
-      return `${diffHours}H ${diffMins - diffHours * MINS_PER_HOUR}M`;
+      return `${twoDigitNumber(diffHours)}h ${twoDigitNumber(diffMins - diffHours * MINS_PER_HOUR)}m`;
     default:
-      return `${diffDays}D ${diffHours - diffDays * HOURS_PER_DAY}H ${diffMins - diffHours * MINS_PER_HOUR}M`;
+      return `${twoDigitNumber(diffDays)}d ${twoDigitNumber(diffHours - diffDays * HOURS_PER_DAY)}h ${twoDigitNumber(diffMins - diffHours * MINS_PER_HOUR)}m`;
   }
 };
 
