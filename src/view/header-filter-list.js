@@ -16,7 +16,7 @@ const createFilterItemTemplate = (filter, currentFilter) => {
       <label class="trip-filters__filter-label" for="filter-${type}">${type}</label>
     </div>`
   );
-}
+};
 
 const headerFilterListTemplate = (filters, currentFilter) =>
   `<form class="trip-filters" action="#" method="get">

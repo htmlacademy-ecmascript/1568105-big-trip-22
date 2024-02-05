@@ -100,7 +100,7 @@ const SortingList = [
     DISABLED: true,
     DATA_SORT: ''
   },
-]
+];
 
 export {
   DATE_FORMAT,

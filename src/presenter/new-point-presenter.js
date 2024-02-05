@@ -86,18 +86,18 @@ export default class NewPointPresenter {
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
     this.#cancelHandler();
-  }
+  };
 
   setDisabled() {
     this.addNewPointButton.updateElement({
       addingMode: true
-    })
+    });
   }
 
   setEnabled() {
     this.addNewPointButton.updateElement({
       addingMode: false
-    })
+    });
   }
 
   setSaving = () => {
@@ -113,7 +113,7 @@ export default class NewPointPresenter {
         isSaving: false,
         isDisabled: false,
       });
-    }
+    };
     this.#newPointComponent.shake(resetFormState);
-  }
+  };
 }

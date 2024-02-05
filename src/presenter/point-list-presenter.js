@@ -33,14 +33,14 @@ export default class PointListPresenter {
     this.#pointModel = pointModel;
     this.#filterModel = filterModel;
     this.mainContainer = mainContainer;
-    this.#headerTopInfoPresenter = headerTopInfoPresenter
+    this.#headerTopInfoPresenter = headerTopInfoPresenter;
 
     this.newPointPresenter = new NewPointPresenter({
       pointModel: this.#pointModel,
       onDataAdd: this.#handleAnyViewAction,
       openForm: this.#createNewPoint,
       onCancel: () => {
-        this.#sortingHandler('DEFAULT')
+        this.#sortingHandler('DEFAULT');
       }
     });
 
@@ -48,7 +48,7 @@ export default class PointListPresenter {
     this.#filterModel.addObserver(() => {
       this.init({ sort: 'DEFAULT' });
       this.#removeSortComponent();
-      this.#renderSortComponent()
+      this.#renderSortComponent();
 
     });
   }
@@ -61,7 +61,7 @@ export default class PointListPresenter {
 
   resetSort = () => {
     this.#sort = 'DEFAULT';
-  }
+  };
 
   init({ sort }) {
     this.#sort = sort;
@@ -114,7 +114,7 @@ export default class PointListPresenter {
 
     const list = this.#sorting(this.#filtering([...this.#pointModel.getPoint()]));
     this.newPointPresenter.setEnabled();
-    this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: this.#sortingByDefault([...this.#pointModel.getPoint()]) })
+    this.#headerTopInfoPresenter.init({ model: this.#pointModel, points: this.#sortingByDefault([...this.#pointModel.getPoint()]) });
     if (list.length === 0) {
       this.#sort = 'DEFAULT';
       this.#renderMessage(EmptyListMessage[this.#filterModel.filter.toUpperCase()]);
@@ -129,7 +129,7 @@ export default class PointListPresenter {
 
   #removeSortComponent() {
     if (this.mainSortListComponent) {
-      remove(this.mainSortListComponent)
+      remove(this.mainSortListComponent);
     }
   }
 
@@ -147,8 +147,8 @@ export default class PointListPresenter {
   };
 
   #clearMessage = () => {
-    remove(this.#message)
-  }
+    remove(this.#message);
+  };
 
   #clearPoints = () => {
     this.#pointPresentersList.forEach((item) => {
@@ -170,13 +170,13 @@ export default class PointListPresenter {
   }
 
   #createNewPoint = () => {
-    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING)
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     remove(this.#message);
-  }
+  };
 
   #setFavorite = (point) => {
     this.#handleAnyViewAction(
-      UserAction.UPDATE_POINT,
+      UserAction.UPDATE_FAVORITE,
       UpdateType.PATCH,
       {
         ...point,
@@ -201,7 +201,7 @@ export default class PointListPresenter {
         try {
           await this.#pointModel.updatePoint(updateType, point);
         } catch (error) {
-          this.#pointPresentersList.get(point.id).setError()
+          this.#pointPresentersList.get(point.id).setError();
         }
         break;
       case UserAction.ADD_POINT:
@@ -210,7 +210,7 @@ export default class PointListPresenter {
           await this.#pointModel.addPoint(updateType, point);
           this.newPointPresenter.closeForm();
         } catch (error) {
-          this.newPointPresenter.setError()
+          this.newPointPresenter.setError();
         }
         break;
       case UserAction.DELETE_POINT:
@@ -218,10 +218,21 @@ export default class PointListPresenter {
         try {
           await this.#pointModel.deletePoint(updateType, point);
         } catch (error) {
-          this.#pointPresentersList.get(point.id).setError()
+          this.#pointPresentersList.get(point.id).setError();
+        }
+        break;
+      case UserAction.UPDATE_FAVORITE:
+        try {
+          await this.#pointModel.updatePoint(updateType, point);
+        } catch (error) {
+          this.#pointPresentersList.get(point.id).setFail();
         }
         break;
     }
     this.#uiBlocker.unblock();
   };
+
+  updatePoint(point){
+    this.#pointPresentersList.get(point.id)?.init(point);
+  }
 }

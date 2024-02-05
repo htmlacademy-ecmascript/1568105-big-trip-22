@@ -25,4 +25,4 @@ mainPresenter.init();
 pointModel.init()
   .finally(() => {
     headerFilterPresenter.init();
-})
+  });

@@ -75,21 +75,18 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
           class="event__save-btn  btn  btn--blue"
           type="submit" ${state.isDisabled ? 'disabled' : ''}
         >${state.isSaving ? 'Saving...' : 'Save'}</button>
-        ${isNewPoint
-          ? `<button class="event__reset-btn" type="reset">Cancel</button>`
-          : `<button class="event__reset-btn" type="reset" ${state.isDisabled ? 'disabled' : ''}>${state.isDeleting ? 'Deleting...' : 'Delete'}</button>`
-        }
-        ${!isNewPoint
-          ? `<button class="event__rollup-btn" type="button">
-            <span class="visually-hidden">Open event</span>
-          </button>`
-          : ''
-        }
+        ${isNewPoint ? '<button class="event__reset-btn" type="reset">Cancel</button>' : `<button class="event__reset-btn" type="reset" ${state.isDisabled ? 'disabled' : ''}>${state.isDeleting ? 'Deleting...' : 'Delete'}</button>`}
+        ${!isNewPoint ?
+    `<button class="event__rollup-btn" type="button">
+      <span class="visually-hidden">Open event</span>
+    </button>`
+    : ''
+}
       </header>
       ${state.point.destination || model.getDestinationById(state.point.destination)?.pictures.length || model.getOfferByType(state.point.type).offers ?
-      `<section class="event__details">
+    `<section class="event__details">
       ${model.getOfferByType(state.point.type).offers.length > 0 ?
-        `<section class="event__section  event__section--offers">
+    `<section class="event__section  event__section--offers">
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
           <div class="event__available-offers">
             ${state.point.type ? model.getOfferByType(state.point.type).offers.map((offer) => `
@@ -106,18 +103,17 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
               </div>`).join('') : ''}
           </div>
         </section>` : ''}
-        ${state.point.destination ?
-          (model.getDestinationById(state.point.destination).description || model.getDestinationById(state.point.destination)?.pictures.length ?
-        `<section class="event__section  event__section--destination">
-          <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${state.point.destination ? model.getDestinationById(state.point.destination).description : ''}</p>
-          ${model.getDestinationById(state.point.destination)?.pictures.length ?
-          `<div class="event__photos-container">
-            <div class="event__photos-tape">
-              ${model.getDestinationById(state.point.destination)?.pictures.map((item) => `
-                <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('')}
-            </div>
-          </div>` : ''}
+        ${state.point.destination ? (model.getDestinationById(state.point.destination).description || model.getDestinationById(state.point.destination)?.pictures.length ?
+    `<section class="event__section  event__section--destination">
+      <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+      <p class="event__destination-description">${state.point.destination ? model.getDestinationById(state.point.destination).description : ''}</p>
+      ${model.getDestinationById(state.point.destination)?.pictures.length ?
+      `<div class="event__photos-container">
+        <div class="event__photos-tape">
+          ${model.getDestinationById(state.point.destination)?.pictures.map((item) => `
+            <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('')}
+        </div>
+      </div>` : ''}
         </section>` : '') : ''}
       </section>` : '' }
     </form>
@@ -196,7 +192,7 @@ export default class EditPoint extends AbstractStatefulView {
 
   #rollUpButtonHandler = () => {
     this.#onRollUpClick();
-  }
+  };
 
   #deleteButtonHandler = (evt) => {
     evt.preventDefault();
@@ -260,7 +256,7 @@ export default class EditPoint extends AbstractStatefulView {
   };
 
   #dateFromChangeHandler = ([userDate]) => {
-    this.updateElement({
+    this._setState({
       point: {
         ...this._state.point,
         dateFrom: userDate.toISOString()
@@ -270,7 +266,7 @@ export default class EditPoint extends AbstractStatefulView {
   };
 
   #dateToChangeHandler = ([userDate]) => {
-    this.updateElement({
+    this._setState({
       point: {
         ...this._state.point,
         dateTo: userDate.toISOString()

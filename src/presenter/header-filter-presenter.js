@@ -41,5 +41,5 @@ export default class HeaderFilterPresenter {
 
   #changeFilterHandle = () => {
     this.init();
-  }
+  };
 }

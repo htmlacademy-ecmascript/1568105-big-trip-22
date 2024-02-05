@@ -28,7 +28,7 @@ export default class MainPresenter {
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
       case UpdateType.PATCH:
-        this.#pointListPresenter.renderPointsList();
+        this.#pointListPresenter.updatePoint(data);
 
         break;
       case UpdateType.MINOR:

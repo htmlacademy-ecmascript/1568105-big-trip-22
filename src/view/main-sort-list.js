@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { SortingList } from '../utilities/constants.js'
+import { SortingList } from '../utilities/constants.js';
 
 const mainSortListTemplate = (sort) =>
   `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
@@ -32,7 +32,7 @@ export default class MainSortList extends AbstractStatefulView {
   #chooseSorting = (evt) => {
     if (evt.target.dataset.sort) {
       this.#sortHandler(evt.target.dataset.sort);
-      this.#sorting = evt.target.dataset.sort
+      this.#sorting = evt.target.dataset.sort;
     }
   };
 
