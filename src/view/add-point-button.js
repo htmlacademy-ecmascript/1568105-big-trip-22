@@ -22,7 +22,7 @@ export default class AddNewPointButtonView extends AbstractStatefulView {
   }
 
   static parseAddModeState = (addingMode) => ({ addingMode });
-  static parseStateToPoint = (addingMode) => state.addingMode;
+  static parseStateToPoint = () => this._state.addingMode;
 
   get template() {
     return createAddNewPointButton({ disabled: this._state.addingMode });

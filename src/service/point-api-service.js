@@ -44,7 +44,7 @@ export default class PointApiService extends ApiService {
   }
 
   async deletePoint(pointId) {
-    const response = await this._load({
+    await this._load({
       url: `${EndPoints.POINTS}/${pointId}`,
       method: Method.DELETE,
       headers: new Headers({ 'Content-Type': 'application/json' }),

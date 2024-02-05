@@ -108,7 +108,7 @@ export default class PointModel extends Observable {
       ];
       this._notify(updateType, newPoint);
     } catch (err) {
-      throw new Error('Can\'t add point@@@   ' + err + '=====');
+      throw new Error('Can\'t add point');
     }
   }
 
