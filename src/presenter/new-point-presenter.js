@@ -1,5 +1,5 @@
 import { render, remove } from '../framework/render.js';
-import AddNewPointButton from '../view/add-point-button.js';
+import AddPointButton from '../view/add-point-button.js';
 import EditPoint from '../view/edit-point.js';
 import { UserAction, UpdateType } from '../utilities/constants.js';
 
@@ -26,7 +26,7 @@ export default class NewPointPresenter {
     this.#openForm = openForm;
     this.#cancelHandler = onCancel;
 
-    this.addNewPointButton = new AddNewPointButton({
+    this.addNewPointButton = new AddPointButton({
       onClick: () => {
         this.#addNewPointClickHandler();
       }
@@ -77,12 +77,6 @@ export default class NewPointPresenter {
   };
 
   cancelNewPoint = () => {
-    // this.#newPointComponent.updateElement({
-    //   point: {
-    //     ...newPointSkeleton,
-    //     type: ''
-    //   }
-    // })
     remove(this.#newPointComponent);
     this.addNewPointButton.reset();
     this.#cancelHandler();

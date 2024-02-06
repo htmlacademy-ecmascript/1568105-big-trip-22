@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeDate, getDuration } from '../utilities/utilities.js';
 import { DATE_FORMAT } from '../utilities/constants.js';
+import he from 'he';
 
 function pointItemTemplate(point, destination, offers) {
   return (
@@ -8,9 +9,9 @@ function pointItemTemplate(point, destination, offers) {
       <div class="event">
         <time class="event__date" datetime=${humanizeDate(point.dateFrom, DATE_FORMAT.yearMonthDay)}>${humanizeDate(point.dateFrom, DATE_FORMAT.monthDay)}</time>
         <div class="event__type">
-          <img class="event__type-icon" width="42" height="42" src="img/icons/${point.type}.png" alt="Event type icon">
+          <img class="event__type-icon" width="42" height="42" src="img/icons/${he.encode(point.type)}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${point.type} ${destination.name}</h3>
+        <h3 class="event__title">${he.encode(point.type)} ${he.encode(destination.name)}</h3>
         <div class="event__schedule">
           <p class="event__time">
             <time class="event__start-time" datetime=${point.dateFrom}>${humanizeDate(point.dateFrom, DATE_FORMAT.hours)}</time>
@@ -26,7 +27,7 @@ function pointItemTemplate(point, destination, offers) {
         <ul class="event__selected-offers">
           ${offers.map((item) => `
             <li class="event__offer">
-              <span class="event__offer-title">${item.title}</span>
+              <span class="event__offer-title">${he.encode(item.title)}</span>
               &plus;&euro;&nbsp;
               <span class="event__offer-price">${item.price}</span>
             </li>
