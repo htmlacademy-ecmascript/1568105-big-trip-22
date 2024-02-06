@@ -3,6 +3,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { humanizeDate } from '../utilities/utilities.js';
 import { DATE_FORMAT, MUTUAL_CONFIG } from '../utilities/constants.js';
+import he from 'he';
 
 const pointEditTemplate = ({ state, model, isNewPoint }) =>
   `<li class="trip-events__item">
@@ -11,7 +12,7 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            ${state.point.type ? `<img class="event__type-icon" width="17" height="17" src="img/icons/${state.point.type}.png" alt="Event type icon">` : ''}
+            ${state.point.type ? `<img class="event__type-icon" width="17" height="17" src="img/icons/${he.encode(state.point.type)}.png" alt="Event type icon">` : ''}
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -25,8 +26,8 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
                     class="event__type-input  visually-hidden"
                     type="radio" name="event-type"
                     ${state.point.type === item.type ? 'checked' : ''}
-                    value=${item.type}>
-                  <label class="event__type-label  event__type-label--${item.type}" for="event-type-${item.type}-1">${item.type}</label>
+                    value=${he.encode(item.type)}>
+                  <label class="event__type-label  event__type-label--${he.encode(item.type)}" for="event-type-${he.encode(item.type)}-1">${he.encode(item.type)}</label>
                 </div>`).join('')}
             </fieldset>
           </div>
@@ -34,16 +35,16 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
 
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-${state.point.id || '0'}">
-            ${state.point.type}
+            ${he.encode(state.point.type)}
           </label>
           <input
             class="event__input  event__input--destination"
             id="event-destination-${state.point.id || '0'}"
             type="text" name="event-destination"
-            value="${state.point.destination ? model.getDestinationById(state.point.destination).name : ''}"
+            value="${state.point.destination ? he.encode(model.getDestinationById(state.point.destination).name) : ''}"
             list="destination-list-1" required>
           <datalist id="destination-list-1">
-            ${model.getDestinations().length ? model.getDestinations().map((item) => `<option value="${item.name}"></option>`).join('') : ''}
+            ${model.getDestinations().length ? model.getDestinations().map((item) => `<option value="${he.encode(item.name)}"></option>`).join('') : ''}
           </datalist>
         </div>
 
@@ -93,10 +94,10 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
               <div class="event__offer-selector">
                 <input
                   class="event__offer-checkbox  visually-hidden"
-                  id=${offer.id} type="checkbox" name=${offer.id}
+                  id=${offer.id} type="checkbox" name=${he.encode(offer.id)}
                   ${state.point.offers.includes(offer.id) ? 'checked' : ''}>
-                <label class="event__offer-label" for=${offer.id}>
-                  <span class="event__offer-title">${offer.title}</span>
+                <label class="event__offer-label" for=${he.encode(offer.id)}>
+                  <span class="event__offer-title">${he.encode(offer.title)}</span>
                   &plus;&euro;&nbsp;
                   <span class="event__offer-price">${offer.price}</span>
                 </label>
@@ -106,12 +107,12 @@ const pointEditTemplate = ({ state, model, isNewPoint }) =>
         ${state.point.destination && (model.getDestinationById(state.point.destination).description || model.getDestinationById(state.point.destination)?.pictures.length) ?
     `<section class="event__section  event__section--destination">
       <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-      <p class="event__destination-description">${state.point.destination ? model.getDestinationById(state.point.destination).description : ''}</p>
+      <p class="event__destination-description">${state.point.destination ? he.encode(model.getDestinationById(state.point.destination).description) : ''}</p>
       ${model.getDestinationById(state.point.destination)?.pictures.length ?
     `<div class="event__photos-container">
         <div class="event__photos-tape">
           ${model.getDestinationById(state.point.destination)?.pictures.map((item) => `
-          <img class="event__photo" src="${item.src}" alt="${item.description}">`).join('')}
+          <img class="event__photo" src="${he.encode(item.src)}" alt="${he.encode(item.description)}">`).join('')}
         </div>
       </div>` : ''}
         </section>` : ''}
@@ -141,21 +142,13 @@ export default class EditPoint extends AbstractStatefulView {
     this._restoreHandlers();
   }
 
-  static parsePointToState = (point) => ({
-    point: { ...point },
-    isSaving: false,
-    isDeleting: false,
-    isDisabled: false
-  });
-
-  static parseStateToPoint = (state) => {
-    const point = { ...state };
-    delete point.isDisabled;
-    delete point.isSaving;
-    delete point.isDeleting;
-
-    return point;
-  };
+  get template() {
+    return pointEditTemplate({
+      state: this._state,
+      model: this.#model,
+      isNewPoint: this.#isNewPoint
+    });
+  }
 
   _restoreHandlers() {
     this.element.querySelector('.event').addEventListener('submit', this.#submitHandler);
@@ -274,17 +267,25 @@ export default class EditPoint extends AbstractStatefulView {
     });
   };
 
-  get template() {
-    return pointEditTemplate({
-      state: this._state,
-      model: this.#model,
-      isNewPoint: this.#isNewPoint
-    });
-  }
-
   #submitHandler = (evt) => {
     evt.preventDefault();
 
     this.#onSubmit(this._state.point);
+  };
+
+  static parsePointToState = (point) => ({
+    point: { ...point },
+    isSaving: false,
+    isDeleting: false,
+    isDisabled: false
+  });
+
+  static parseStateToPoint = (state) => {
+    const point = { ...state };
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
+    return point;
   };
 }

@@ -29,14 +29,14 @@ export default class MainSortList extends AbstractStatefulView {
     this.element.addEventListener('change', this.#chooseSorting);
   }
 
+  get template() {
+    return mainSortListTemplate(this.#sorting);
+  }
+
   #chooseSorting = (evt) => {
     if (evt.target.dataset.sort) {
       this.#sortHandler(evt.target.dataset.sort);
       this.#sorting = evt.target.dataset.sort;
     }
   };
-
-  get template() {
-    return mainSortListTemplate(this.#sorting);
-  }
 }

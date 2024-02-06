@@ -8,24 +8,21 @@ function createAddNewPointButton({ disabled }) {
     >New event</button>`;
 }
 
-export default class AddNewPointButtonView extends AbstractStatefulView {
+export default class AddPointButton extends AbstractStatefulView {
   #onClick = null;
   constructor({ onClick }) {
     super();
     this.#onClick = onClick;
-    this._setState(AddNewPointButtonView.parseAddModeState(false));
+    this._setState(AddPointButton.parseAddModeState(false));
     this._restoreHandlers();
+  }
+
+  get template() {
+    return createAddNewPointButton({ disabled: this._state.addingMode });
   }
 
   _restoreHandlers() {
     this.element.addEventListener('click', this.#onClickHandler);
-  }
-
-  static parseAddModeState = (addingMode) => ({ addingMode });
-  static parseStateToPoint = () => this._state.addingMode;
-
-  get template() {
-    return createAddNewPointButton({ disabled: this._state.addingMode });
   }
 
   #onClickHandler = () => {
@@ -40,4 +37,7 @@ export default class AddNewPointButtonView extends AbstractStatefulView {
       addingMode: false
     });
   };
+
+  static parseAddModeState = (addingMode) => ({ addingMode });
+  static parseStateToPoint = () => this._state.addingMode;
 }
